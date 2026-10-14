@@ -9,6 +9,102 @@ from datetime import date
 from calendar_layout import calendar_layout
 
 
+def _track(duration, poses):
+    """Every entry is a held pose, with an explicit repeat-boundary state."""
+    return {"duration": duration, "poses": poses}
+
+
+# Woodcut/casting poses were informed by decoded OSRS gameplay GIFs. Hammer
+# geometry was checked against official equipped-hammer and normal-anvil stills;
+# its timing is authored, not claimed as a captured normal-smithing cycle.
+# GIF sample intervals are not engine timing. All tracks deliberately hold poses.
+MOTION_TRACKS = {
+    "woodcut-swing": _track(1.2, [
+        (0, "rotate(0deg)", 1), (.12, "rotate(12deg)", 1),
+        (.24, "rotate(28deg)", 1), (.42, "rotate(-38deg)", 1),
+        (.66, "rotate(-16deg)", 1), (.78, "rotate(0deg)", 1),
+        (1.2, "rotate(0deg)", 1)]),
+    "smith-body": _track(2.4, [
+        (0, "rotate(0deg)", 1), (.30, "rotate(3deg)", 1),
+        (.45, "rotate(5deg)", 1), (.60, "rotate(-14deg)", 1),
+        (.84, "rotate(-11deg)", 1), (1.02, "rotate(-5deg)", 1),
+        (1.20, "rotate(0deg)", 1), (2.4, "rotate(0deg)", 1)]),
+    "smith-arm": _track(2.4, [
+        (0, "rotate(0deg)", 1), (.30, "rotate(14deg)", 1),
+        (.45, "rotate(22deg)", 1), (.60, "rotate(-76deg)", 1),
+        (.84, "rotate(-61deg)", 1), (1.02, "rotate(-26deg)", 1),
+        (1.20, "rotate(0deg)", 1), (2.4, "rotate(0deg)", 1)]),
+    "smith-spark": _track(2.4, [
+        (0, "translate(0px,0px)", 0), (.60, "translate(0px,0px)", .8),
+        (.72, "translate(-4px,-8px)", .65), (.84, "translate(-8px,-16px)", .3),
+        (.96, "translate(-12px,-22px)", 0), (2.4, "translate(0px,0px)", 0)]),
+    "pond-ripple": _track(2.4, [
+        (0, "scale(.42)", 0), (.3, "scale(.62)", .85),
+        (.6, "scale(.82)", 1), (.9, "scale(1.02)", .9),
+        (1.2, "scale(1.22)", .75), (1.5, "scale(1.42)", .5),
+        (1.8, "scale(1.62)", .2), (2.1, "scale(1.78)", 0),
+        (2.4, "scale(.42)", 0)]),
+    "furnace-flame": _track(1.2, [
+        (0, "scale(1,1)", 1), (.15, "scale(.98,1.18)", 1),
+        (.3, "scale(1.04,.86)", 1), (.45, "scale(.96,1.25)", 1),
+        (.6, "scale(1.05,.93)", 1), (.75, "scale(.98,1.12)", 1),
+        (.9, "scale(1.06,.79)", 1), (1.05, "scale(1,1.08)", 1),
+        (1.2, "scale(1,1)", 1)]),
+    "campfire-flame": _track(1.2, [
+        (0, "scale(1,1) rotate(0deg)", 1), (.15, "scale(.96,1.2) rotate(-3deg)", 1),
+        (.3, "scale(1.08,.82) rotate(2deg)", 1), (.45, "scale(.94,1.35) rotate(-2deg)", 1),
+        (.6, "scale(1.03,.94) rotate(1deg)", 1), (.75, "scale(.95,1.25) rotate(2deg)", 1),
+        (.9, "scale(1.06,.88) rotate(-2deg)", 1), (1.05, "scale(.98,1.1) rotate(0deg)", 1),
+        (1.2, "scale(1,1) rotate(0deg)", 1)]),
+    "furnace-ember": _track(1.2, [
+        (0, "translate(0px,0px)", 0), (.15, "translate(0px,-3px)", .8),
+        (.3, "translate(1px,-7px)", .8), (.45, "translate(1px,-11px)", .65),
+        (.6, "translate(2px,-16px)", .5), (.75, "translate(3px,-20px)", .25),
+        (.9, "translate(4px,-24px)", 0), (1.2, "translate(0px,0px)", 0)]),
+    "hero-idle": _track(7.2, [
+        (0, "rotate(0deg)", 1), (2.4, "rotate(.8deg)", 1),
+        (3, "rotate(0deg)", 1), (5.4, "rotate(-.8deg)", 1),
+        (6, "rotate(0deg)", 1), (7.2, "rotate(0deg)", 1)]),
+    "cow-tail": _track(7.2, [
+        (0, "rotate(0deg)", 1), (3.6, "rotate(-18deg)", 1),
+        (3.72, "rotate(14deg)", 1), (3.96, "rotate(-8deg)", 1),
+        (4.2, "rotate(4deg)", 1), (4.44, "rotate(0deg)", 1),
+        (7.2, "rotate(0deg)", 1)]),
+    "wizard-cast": _track(7.2, [
+        (0, "rotate(0deg)", 1), (1.2, "rotate(48deg)", 1),
+        (1.35, "rotate(100deg)", 1), (4.05, "rotate(0deg)", 1),
+        (7.2, "rotate(0deg)", 1)]),
+    "wizard-glow": _track(7.2, [
+        (0, "scale(.2)", 0), (1.35, "scale(.35)", .55),
+        (1.5, "scale(.65)", .6), (1.65, "scale(.95)", .65),
+        (1.8, "scale(1.15)", .6), (1.95, "scale(.9)", .55),
+        (2.1, "scale(.65)", .5), (2.25, "scale(.35)", .4),
+        (2.4, "scale(.2)", 0), (2.55, "scale(.35)", .5),
+        (2.7, "scale(.65)", .55), (2.85, "scale(.95)", .6),
+        (3, "scale(1.15)", .6), (3.15, "scale(.9)", .55),
+        (3.3, "scale(.65)", .5), (3.45, "scale(.35)", .4),
+        (3.6, "scale(.2)", 0), (7.2, "scale(.2)", 0)])
+}
+
+
+def motion_css():
+    css = ['<style>', '.motion { transform-box: view-box; transform-origin: 0px 0px; }',
+           '.transient { opacity: 0; }', '@media (prefers-reduced-motion: no-preference) {']
+    for name, track in MOTION_TRACKS.items():
+        css.append(f'  .{name} {{ animation: quest-{name} {track["duration"]:g}s steps(1,end) infinite; }}')
+    css += ['  .pond-ripple ellipse { stroke-width: 2; }',
+            '  .firebox-motion-clip { clip-path: url(#firebox-clip); }', '}']
+    for name, track in MOTION_TRACKS.items():
+        css.append(f'@keyframes quest-{name} {{')
+        for time, transform, opacity in track['poses']:
+            css.append(f'  {time / track["duration"] * 100:.6g}% {{ transform: {transform}; opacity: {opacity:g}; }}')
+        css.append('}')
+    css += ['@media (prefers-reduced-motion: reduce) {',
+            '  .motion { animation: none !important; }',
+            '  .transient { opacity: 0 !important; }', '}', '</style>']
+    return '\n'.join(css)
+
+
 def render(DATA):
     random.seed(42)
     S=[]
@@ -21,13 +117,14 @@ def render(DATA):
      attrs=' '.join(f'{k.replace("_","-")}="{v}"' for k,v in a.items()); add(f'<text x="{x}" y="{y}" font-size="{size}" fill="{c}" {attrs}>{t}</text>')
     def use(id,x,y,scale=1,**a):
      attrs=' '.join(f'{k.replace("_","-")}="{v}"' for k,v in a.items()); add(f'<use href="#{id}" transform="translate({x} {y}) scale({scale})" {attrs}/>')
-    def motion(name, x, y, delay=None):
+    def motion(name, x, y, delay=None, transient=False):
      # Keep placement on an outer group and animate only in a local coordinate
      # frame. A translated origin prevents CSS transforms from replacing the
      # character's placement/scale or orbiting around the SVG canvas.
      add(f'<g data-motion-pivot="{name}" transform="translate({x} {y})">')
      phase=f' style="animation-delay:{delay}s"' if delay is not None else ''
-     add(f'<g class="motion {name}"{phase}><g transform="translate({-x} {-y})">')
+     transient_class="transient " if transient else ""
+     add(f'<g class="motion {transient_class}{name}"{phase}><g transform="translate({-x} {-y})">')
     def endmotion(): add('</g></g></g>')
     def sparkle(x,y,c='#c8b3ec',s=2):
      rect(x-s,y,s*3,s,c);rect(x,y-s,s,s*3,c)
@@ -98,7 +195,7 @@ def render(DATA):
        poly([(lx,ly),(lx+rr.uniform(1.5,3),ly+2),(lx+rr.uniform(-2,1),ly+ll)],rr.choice(['#546831','#70813b','#819344','#2e4823','#415d28']))
      add('</g>')
     def woodcutter(x,y,s=1):
-     add(f'<g transform="translate({x} {y}) scale({s})">')
+     add(f'<g id="woodcutter" transform="translate({x} {y}) scale({s})">')
      add('<ellipse cx="0" cy="20" rx="23" ry="11" fill="#233b22" opacity=".28"/>')
      # Familiar default human: khaki tee, green trousers, brown boots; viewed side-on.
      poly([(-10,-10),(0,-8),(-3,10),(-10,24),(-17,20),(-12,6)],'#276640')
@@ -246,93 +343,10 @@ def render(DATA):
 <g id="tuft"><path d="M-4 4l-5-9 8 4 3-10 3 10 8-4-5 9z" fill="#688740"/><path d="M0 3l2-9 2 9z" fill="#93a555"/></g>
 <clipPath id="firebox-clip"><path d="M-29-55L-19-63 0-60 8-49 8-21-30-28Z"/></clipPath>
 </defs>''')
-    # All cycles share a 14.4-second master loop, with no JS or outside assets.
-    # The original illustration is also the static / reduced-motion fallback.
-    add('''<style>
-.motion { transform-box: view-box; transform-origin: 0px 0px; }
-.transient { opacity: 0; }
-@media (prefers-reduced-motion: no-preference) {
-  .woodcut-swing { animation: quest-chop 4.8s infinite; }
-  .pond-ripple { animation: quest-ripple 4.8s linear infinite; }
-  .furnace-flame { animation: quest-furnace 4.8s ease-in-out infinite; }
-  .furnace-ember { animation: quest-ember 3.6s linear infinite; }
-  .campfire-flame { animation: quest-campfire 2.4s ease-in-out infinite; }
-  .pond-ripple ellipse { stroke-width: 2; }
-  .firebox-motion-clip { clip-path: url(#firebox-clip); }
-  .smith-body { animation: quest-smith-body 3.6s ease-in-out infinite; }
-  .smith-arm { animation: quest-smith-arm 3.6s ease-in-out infinite; }
-  .smith-spark { animation: quest-smith-spark 3.6s linear infinite; }
-  .cow-tail { animation: quest-tail 7.2s ease-in-out infinite; }
-  .hero-idle { animation: quest-idle 7.2s ease-in-out infinite; }
-}
-@keyframes quest-chop {
-  0%, 12%, 100% { transform: rotate(0deg); animation-timing-function: ease-in-out; }
-  31% { transform: rotate(28deg); animation-timing-function: cubic-bezier(.55,.04,.85,.35); }
-  42% { transform: rotate(-38deg); animation-timing-function: ease-out; }
-  48%, 66% { transform: rotate(-35deg); animation-timing-function: ease-in-out; }
-  88% { transform: rotate(0deg); }
-}
-@keyframes quest-ripple {
-  0% { transform: scale(.42); opacity: 0; }
-  18% { opacity: 1; }
-  65% { opacity: .78; }
-  100% { transform: scale(1.78); opacity: 0; }
-}
-@keyframes quest-furnace {
-  0%, 100% { transform: scale(1,1); opacity: .98; }
-  27% { transform: scale(.96,1.25); opacity: 1; }
-  58% { transform: scale(1.06,.79); opacity: .92; }
-  79% { transform: scale(.98,1.16); opacity: 1; }
-}
-@keyframes quest-ember {
-  0%, 16% { transform: translate(0px,0px); opacity: 0; }
-  30% { opacity: .9; }
-  76% { opacity: .55; }
-  92%, 100% { transform: translate(4px,-24px); opacity: 0; }
-}
-@keyframes quest-campfire {
-  0%, 100% { transform: scale(1,1) rotate(0deg); }
-  22% { transform: scale(.94,1.35) rotate(-3deg); }
-  45% { transform: scale(1.08,.82) rotate(2deg); }
-  67% { transform: scale(.95,1.25) rotate(1deg); }
-  83% { transform: scale(1.04,1.05) rotate(-2deg); }
-}
-@keyframes quest-idle {
-  0%, 100% { transform: rotate(0deg); }
-  35% { transform: rotate(2.2deg); }
-  72% { transform: rotate(-1.4deg); }
-}
-@keyframes quest-smith-body {
-  0%, 14%, 100% { transform: rotate(0deg); }
-  27% { transform: rotate(3deg); }
-  43% { transform: rotate(-26deg); }
-  49%, 60% { transform: rotate(-23deg); }
-  86% { transform: rotate(0deg); }
-}
-@keyframes quest-smith-arm {
-  0%, 14%, 100% { transform: rotate(0deg); }
-  27% { transform: rotate(12deg); animation-timing-function: cubic-bezier(.55,.04,.85,.35); }
-  43% { transform: rotate(-56deg); }
-  49%, 60% { transform: rotate(-50deg); }
-  86% { transform: rotate(0deg); }
-}
-@keyframes quest-smith-spark {
-  0%, 42.5% { transform: translate(0px,0px); opacity: 0; }
-  46% { opacity: .9; }
-  62%, 100% { transform: translate(-12px,-22px); opacity: 0; }
-}
-@keyframes quest-tail {
-  0%, 52%, 100% { transform: rotate(0deg); }
-  62% { transform: rotate(-23deg); }
-  70% { transform: rotate(18deg); }
-  79% { transform: rotate(-13deg); }
-  88% { transform: rotate(7deg); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .motion { animation: none !important; }
-  .transient { opacity: 0 !important; }
-}
-</style>''')
+    # Native, discrete pose changes; no interpolation between key poses.
+    # A 7.2-second master loop closes every track and keeps the art stationary
+    # for reduced-motion users. Data tiles and labels have no motion classes.
+    add(motion_css())
     # Full-bleed world ground. No floating island, display frame, title, or quest card.
     rect(0,0,1400,1000,'#516e35')
     # Broad faceted earth polygons, like the untextured terrain in the actual game.
@@ -363,7 +377,7 @@ def render(DATA):
      path(f'M{x} {y}l3-25m1 25 9-20m-8 19-7-15','none',stroke='#526f30',stroke_width=3)
      rect(x+1,y-28,4,9,'#745d31')
     for i,(xx,yy,rx,ry) in enumerate([(1160,77,13,5),(1176,91,18,6),(1190,75,9,4)]):
-     motion("pond-ripple", xx, yy, delay=-1.6*i)
+     motion("pond-ripple", xx, yy, delay=-.8*i)
      add(f'<ellipse cx="{xx}" cy="{yy}" rx="{rx}" ry="{ry}" fill="none" stroke="#bbc7b2" stroke-width="1.2" opacity=".7"/>')
      endmotion()
     path('M1175 83l4-8 3 8m-8 6h9','none',stroke='#d3d6bb',stroke_width=1.5)
@@ -515,14 +529,25 @@ def render(DATA):
      poly([(-13,-34),(-3,-39),(10,-37),(16,-29),(10,-11),(-11,-11),(-17,-28)],'#25577f');poly([(-13,-34),(-3,-39),(-2,-12),(-11,-11),(-17,-28)],'#3b7397')
      path('M-11-11l11 2 9-3','none',stroke='#65371e',stroke_width=3)
      for yy in [-31,-27,-23]:path(f'M-3 {yy}l5 3m-5 0 5-3','none',stroke='#693b24',stroke_width=1.4)
-     poly([(-16,-30),(-23,-24),(-27,-8),(-18,-6),(-11,-23)],'#2c608b');poly([(13,-31),(20,-26),(23,-9),(15,-6),(10,-23)],'#1c466f')
-     poly([(-25,-9),(-19,-7),(-19,-2),(-25,1),(-28,-3)],'#bd9767');poly([(16,-7),(22,-7),(24,-2),(18,2),(15,-1)],'#bc9568')
+     poly([(-16,-30),(-23,-24),(-27,-8),(-18,-6),(-11,-23)],'#2c608b')
+     poly([(-25,-9),(-19,-7),(-19,-2),(-25,1),(-28,-3)],'#bd9767')
      path('M-25-8l6 2m-3 0 5-1','none',stroke='#8d9189',stroke_width=3)
      poly([(-9,-49),(1,-55),(10,-49),(9,-39),(1,-32),(-8,-38)],'#c59b68');poly([(2,-47),(10,-49),(9,-39),(1,-32),(2,-41)],'#99734c')
      poly([(-7,-39),(1,-40),(7,-38),(4,-32),(-2,-31),(-6,-34)],'#bd9362')
      # distinctive soft, bent conical wizard hat with wide floppy brim
      poly([(-17,-49),(-8,-57),(-4,-65),(0,-78),(8,-82),(12,-76),(7,-65),(8,-57),(18,-49),(9,-44),(-5,-47)],'#205c8a')
      poly([(-17,-49),(-8,-57),(-4,-65),(0,-78),(8,-82),(5,-71),(-1,-57),(-4,-48)],'#357cac');poly([(5,-71),(8,-82),(12,-76),(7,-65),(8,-57),(18,-49),(9,-44),(3,-54)],'#17446f')
+     motion('wizard-cast', 13, -31)
+     poly([(13,-31),(20,-26),(23,-9),(15,-6),(10,-23)],'#1c466f')
+     poly([(16,-7),(22,-7),(24,-2),(18,2),(15,-1)],'#bc9568')
+     endmotion()
+     # Faceted spell states follow the inspected High Alchemy capture: the
+     # character holds one casting pose while polygonal light changes size.
+     motion('wizard-glow', -15, -29, transient=True)
+     poly([(-34,-29),(-28,-43),(-14,-48),(0,-40),(5,-27),(-3,-14),(-19,-10),(-32,-17)],'#d7b52e',opacity=.35)
+     poly([(-28,-29),(-24,-39),(-15,-42),(-5,-36),(-2,-27),(-8,-18),(-18,-16),(-27,-21)],'#f0d64b',opacity=.5)
+     poly([(-22,-30),(-16,-36),(-8,-31),(-11,-23),(-20,-23)],'#fff3a0',opacity=.8)
+     endmotion()
      add('</g>');firestaff(x-24*s,y-4*s,s)
     # Hunched goblin with green nose/ears, topknot, grey armour and beige tunic.
     def goblin(x,y,s=1,flip=False):
@@ -544,7 +569,7 @@ def render(DATA):
      poly([(-6,-40),(-10,-50),(-5,-59),(2,-59),(7,-50),(3,-40)],'#605a28');poly([(-5,-59),(2,-59),(7,-50),(3,-40),(1,-49)],'#433d1f')
      add('</g>')
     # Characters occupy normal game-world scale and do not overlap any day tiles.
-    woodcutter(441,242,1.04)
+    woodcutter(425,242,1.04)
     goblin(699,148,.85);goblin(1257,335,.85,True)
     wizard(1125,278,1.10)
     player(780,684,1.4)
@@ -554,7 +579,7 @@ def render(DATA):
     # A campfire, log and stones by the player's path.
     for x,y,s in [(797,750,.4),(827,743,.35),(840,766,.38),(808,781,.32)]:rock(x,y,s)
     path('M800 769l32-10m-25-11 21 29','none',stroke='#72512d',stroke_width=8)
-    motion('campfire-flame', 817, 771)
+    motion('campfire-flame', 817, 771, delay=-.3)
     poly([(804,762),(808,748),(816,740),(814,754),(827,746),(830,759),(822,771),(811,772)],'#c57431');poly([(811,765),(816,751),(818,760),(823,756),(821,768)],'#e1b454')
     endmotion()
     # Smithing corner fills the previous statistics clearing.
@@ -632,7 +657,7 @@ def render(DATA):
     poly([(-30,-38),(13,-35),(38,-30),(18,-28),(-25,-31)],'#a1afb3')
     # A hot blank and two tiny sparks catch the light.
     poly([(-10,-34),(10,-31),(8,-27),(-14,-29)],'#d77334')
-    poly([(-9,-34),(10,-31),(7,-29),(-11,-32)],'#f4b94b')
+    poly([(-9,-34),(10,-31),(7,-29),(-11,-32)],'#f4b94b',id='smith-hot-blank')
     add('</g>')
     # Horvik-inspired human smith: ochre cap, leather apron, gloves and raised hammer.
     add('<g transform="translate(555 804) scale(1.27)">')
@@ -653,11 +678,18 @@ def render(DATA):
     motion("smith-arm", -17, -45)
     # Raised, bent left arm and hammer above the glowing blank.
     poly([(-16,-41),(-24,-34),(-30,-42),(-26,-49),(-17,-50)],'#b48d5c')
-    poly([(-29,-44),(-35,-50),(-32,-58),(-27,-58),(-23,-51)],'#6e4c2c')
-    path('M-30-56l-10 24','none',stroke='#77552d',stroke_width=4)
-    poly([(-47,-69),(-33,-67),(-30,-59),(-44,-58),(-50,-61)],'#7f8990')
-    poly([(-47,-69),(-33,-67),(-30,-64),(-44,-63),(-50,-65)],'#b3b6ab')
-    poly([(-33,-67),(-30,-59),(-35,-58),(-38,-66)],'#535f68')
+    # A long wooden shaft passes through the palm. Its short butt extends
+    # below the fist; the steel head is a separate object at the far end.
+    add('<g id="smith-hammer" data-local-grip="0 0" transform="translate(-29 -53) rotate(-27)">')
+    path('M0 5V-29','none',stroke='#6e4c28',stroke_width=4.5,stroke_linecap='square',data_part='handle')
+    path('M-.7 4V-28','none',stroke='#ae854b',stroke_width=1.4)
+    poly([(-11,-31),(-8,-35),(9,-33),(11,-26),(7,-23),(-10,-25)],'#78848b',data_part='head')
+    poly([(-11,-31),(-8,-35),(9,-33),(7,-29),(-10,-28)],'#bac1b6')
+    poly([(7,-29),(9,-33),(11,-26),(7,-23)],'#4e5e65')
+    add('</g>')
+    # Draw the glove last so fingers visibly wrap around the shaft.
+    poly([(-29,-44),(-35,-50),(-32,-58),(-27,-58),(-23,-51)],'#6e4c2c',data_hand_grip='-29 -53')
+    path('M-32-54l5-1m-4 4 5-1','none',stroke='#a27a48',stroke_width=1.2)
     endmotion()
     poly([(-10,-65),(-4,-71),(6,-70),(12,-61),(7,-50),(-3,-49),(-13,-56)],'#c49f68')
     poly([(-10,-65),(-4,-71),(6,-70),(2,-60),(-8,-54),(-13,-56)],'#d6b47b')
@@ -836,3 +868,4 @@ def render(DATA):
     add('</g>')
     add('</svg>')
     return '\n'.join(S)
+
