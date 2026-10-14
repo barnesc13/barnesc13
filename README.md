@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/barnesc13/barnesc13/main/assets/tokyo-desk.gif?v=centered-large" width="560" alt="An animated Tokyo desk with a city view, laptop, latte and watch" />
+  <img src="https://raw.githubusercontent.com/barnesc13/barnesc13/b30ec92923a8e551be8a4ef6d038c3089a7709e8/assets/tokyo-desk.gif" width="560" alt="An animated Tokyo desk with a city view, laptop, latte and watch" />
 </p>
 
 - Grew up with a controller in my hands and a computer within reach.
