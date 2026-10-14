@@ -5,7 +5,7 @@
 - At 19, dropped out for a full-time software engineering job at a F500.
 - At 23, took my work abroad. Solo traveled through 20+ countries, made a home in a Oaxacan beach town, learned Spanish.
 - At 26, quit to build something of my own. Plenty of failures, plenty learned.
-- At 28, potentially descending into AI psychosis but having fun while doing it
+- At 28, potentially descending into AI psychosis but having a lot of fun.
 
 <!--
 **barnesc13/barnesc13** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
