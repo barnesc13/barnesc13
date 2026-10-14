@@ -1,4 +1,4 @@
-<img align="left" src="assets/tokyo-desk.gif?v=compact" width="320" height="320" alt="An animated Tokyo desk with a city view, laptop, latte and watch" />
+<img align="left" src="https://raw.githubusercontent.com/barnesc13/barnesc13/main/assets/tokyo-desk.gif?v=compact" width="320" height="320" alt="An animated Tokyo desk with a city view, laptop, latte and watch" />
 
 - Grew up with a controller in my hands and a computer within reach.
 - At 11, led WoW raids against the Lich King and benched grown men with mortgages. My first management role.
@@ -9,7 +9,7 @@
 - At 26, quit to build something of my own. Plenty of failures, plenty learned.
 - At 28, potentially descending into AI psychosis but having a lot of fun.
 
-![RuneScape contribution garden with a quest log of my GitHub activity](assets/questlog.svg?v=animated)
+![RuneScape contribution garden with a quest log of my GitHub activity](https://raw.githubusercontent.com/barnesc13/barnesc13/main/assets/questlog.svg?v=animated)
 
 <!--
 **barnesc13/barnesc13** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
