@@ -2,6 +2,7 @@
 
 Only the daily tiles, counts and date labels change. Pixel glyphs are embedded
 as vector paths, so the image needs no downloaded fonts or other assets.
+Native SVG/CSS motion is decorative only and respects reduced-motion settings.
 """
 import random, math
 from datetime import date
@@ -19,6 +20,14 @@ def render(DATA):
      attrs=' '.join(f'{k.replace("_","-")}="{v}"' for k,v in a.items()); add(f'<text x="{x}" y="{y}" font-size="{size}" fill="{c}" {attrs}>{t}</text>')
     def use(id,x,y,scale=1,**a):
      attrs=' '.join(f'{k.replace("_","-")}="{v}"' for k,v in a.items()); add(f'<use href="#{id}" transform="translate({x} {y}) scale({scale})" {attrs}/>')
+    def motion(name, x, y, delay=None):
+     # Keep placement on an outer group and animate only in a local coordinate
+     # frame. A translated origin prevents CSS transforms from replacing the
+     # character's placement/scale or orbiting around the SVG canvas.
+     add(f'<g data-motion-pivot="{name}" transform="translate({x} {y})">')
+     phase=f' style="animation-delay:{delay}s"' if delay is not None else ''
+     add(f'<g class="motion {name}"{phase}><g transform="translate({-x} {-y})">')
+    def endmotion(): add('</g></g></g>')
     def sparkle(x,y,c='#c8b3ec',s=2):
      rect(x-s,y,s*3,s,c);rect(x,y-s,s,s*3,c)
     def tree(x,y,s=1):
@@ -107,6 +116,8 @@ def render(DATA):
      poly([(-10,-58),(-7,-67),(3,-70),(5,-61),(-1,-54),(-13,-53)],'#dfc494')
      poly([(-13,-57),(-17,-54),(-13,-52),(-10,-48),(-5,-47),(-4,-55)],'#b79262')
      poly([(-12,-57),(-9,-57),(-10,-55)],'#3d3727')
+     # Sleeve, forearm, grip and axe rotate together around the shoulder.
+     motion("woodcut-swing", -11, -35)
      # Forward sleeve and bent forearm, both hands close to the upright handle.
      poly([(-13,-39),(-20,-33),(-18,-23),(-10,-23),(-6,-32)],'#b2aa67')
      poly([(-18,-25),(-12,-25),(-14,-20),(-29,-23),(-31,-28),(-26,-30)],'#d0ad7c')
@@ -118,6 +129,7 @@ def render(DATA):
      poly([(-40,-67),(-46,-65),(-49,-58),(-44,-57),(-42,-62)],'#aec1be')
      poly([(-30,-60),(-40,-67),(-42,-62),(-30,-57),(-23,-58),(-23,-61)],'#719baa')
      poly([(-32,-28),(-26,-28),(-25,-23),(-28,-20),(-33,-23)],'#d4b07b')
+     endmotion()
      add('</g>')
     def stump(x,y,s=1):
      add(f'<g transform="translate({x} {y}) scale({s})">')
@@ -229,7 +241,62 @@ def render(DATA):
 <radialGradient id="vignette"><stop offset=".55" stop-color="#132614" stop-opacity="0"/><stop offset="1" stop-color="#142417" stop-opacity=".35"/></radialGradient>
 <radialGradient id="lamp"><stop stop-color="#ffd691" stop-opacity=".5"/><stop offset="1" stop-color="#ffc873" stop-opacity="0"/></radialGradient>
 <g id="tuft"><path d="M-4 4l-5-9 8 4 3-10 3 10 8-4-5 9z" fill="#688740"/><path d="M0 3l2-9 2 9z" fill="#93a555"/></g>
+<clipPath id="firebox-clip"><path d="M-29-55L-19-63 0-60 8-49 8-21-30-28Z"/></clipPath>
 </defs>''')
+    # All cycles share a 14.4-second master loop, with no JS or outside assets.
+    # The original illustration is also the static / reduced-motion fallback.
+    add('''<style>
+.motion { transform-box: view-box; transform-origin: 0px 0px; }
+.transient { opacity: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .woodcut-swing { animation: quest-chop 4.8s infinite; }
+  .pond-ripple { animation: quest-ripple 4.8s linear infinite; }
+  .furnace-flame { animation: quest-furnace 4.8s ease-in-out infinite; }
+  .furnace-ember { animation: quest-ember 3.6s linear infinite; }
+  .campfire-flame { animation: quest-campfire 3.6s ease-in-out infinite; }
+  .hero-idle { animation: quest-idle 7.2s ease-in-out infinite; }
+}
+@keyframes quest-chop {
+  0%, 12%, 100% { transform: rotate(0deg); animation-timing-function: ease-in-out; }
+  31% { transform: rotate(28deg); animation-timing-function: cubic-bezier(.55,.04,.85,.35); }
+  42% { transform: rotate(-38deg); animation-timing-function: ease-out; }
+  48%, 66% { transform: rotate(-35deg); animation-timing-function: ease-in-out; }
+  88% { transform: rotate(0deg); }
+}
+@keyframes quest-ripple {
+  0% { transform: scale(.64); opacity: 0; }
+  18% { opacity: .62; }
+  65% { opacity: .38; }
+  100% { transform: scale(1.34); opacity: 0; }
+}
+@keyframes quest-furnace {
+  0%, 100% { transform: scale(1,1); opacity: .94; }
+  27% { transform: scale(1,1.045); opacity: 1; }
+  58% { transform: scale(1,.98); opacity: .9; }
+  79% { transform: scale(1,1.025); opacity: .97; }
+}
+@keyframes quest-ember {
+  0%, 16% { transform: translate(0px,0px); opacity: 0; }
+  30% { opacity: .68; }
+  76% { opacity: .34; }
+  92%, 100% { transform: translate(2px,-17px); opacity: 0; }
+}
+@keyframes quest-campfire {
+  0%, 100% { transform: scale(1,1) rotate(0deg); }
+  30% { transform: scale(.98,1.06) rotate(1deg); }
+  63% { transform: scale(1.015,.97) rotate(-1deg); }
+  82% { transform: scale(.99,1.03) rotate(.5deg); }
+}
+@keyframes quest-idle {
+  0%, 100% { transform: rotate(0deg); }
+  35% { transform: rotate(.55deg); }
+  72% { transform: rotate(-.35deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .motion { animation: none !important; }
+  .transient { opacity: 0 !important; }
+}
+</style>''')
     # Full-bleed world ground. No floating island, display frame, title, or quest card.
     rect(0,0,1400,1000,'#516e35')
     # Broad faceted earth polygons, like the untextured terrain in the actual game.
@@ -259,8 +326,10 @@ def render(DATA):
     for x,y in [(1069,81),(1093,119),(1232,119),(1247,54)]:
      path(f'M{x} {y}l3-25m1 25 9-20m-8 19-7-15','none',stroke='#526f30',stroke_width=3)
      rect(x+1,y-28,4,9,'#745d31')
-    for xx,yy,rx,ry in [(1160,77,13,5),(1176,91,18,6),(1190,75,9,4)]:
+    for i,(xx,yy,rx,ry) in enumerate([(1160,77,13,5),(1176,91,18,6),(1190,75,9,4)]):
+     motion("pond-ripple", xx, yy, delay=-1.6*i)
      add(f'<ellipse cx="{xx}" cy="{yy}" rx="{rx}" ry="{ry}" fill="none" stroke="#bbc7b2" stroke-width="1.2" opacity=".7"/>')
+     endmotion()
     path('M1175 83l4-8 3 8m-8 6h9','none',stroke='#d3d6bb',stroke_width=1.5)
 
     # Background copse and far-side objects, all outside the data bed.
@@ -361,6 +430,8 @@ def render(DATA):
      # skirt plates, leather belt
      poly([(-13,-15),(12,-15),(14,-2),(5,4),(-1,-2),(-8,4),(-15,0)],'#577d86');poly([(-13,-15),(-1,-13),(-1,-2),(-8,4),(-15,0)],'#75949a')
      path('M-12-16l11 3 13-3','none',stroke='#483e30',stroke_width=4)
+     # A tiny upper-body weight shift; legs, feet and shadow stay planted.
+     motion("hero-idle", 0, -14)
      # torso: actual peaked angular platebody, not a square robot
      poly([(-12,-37),(-5,-43),(7,-41),(16,-33),(12,-17),(0,-13),(-12,-18),(-18,-31)],'#527684')
      poly([(-12,-37),(-5,-43),(0,-33),(-1,-19),(-12,-18),(-18,-31)],'#81a0a7')
@@ -393,6 +464,7 @@ def render(DATA):
      poly([(23,-10),(24,-8),(28,-7),(35,0),(40,1),(39,2),(33,-1),(27,-5),(22,-6)],'#85827c')
      poly([(25,-1),(27,-4),(31,-2),(32,1),(28,4),(25,2)],'#618793')
      path('M27-1l3 2','none',stroke='#3d616e',stroke_width=.8)
+     endmotion()
      add('</g>')
     # Wizard: familiar bent blue hat, blue robe/skirt, grey beard, brown boots.
     def wizard(x,y,s=1):
@@ -443,7 +515,9 @@ def render(DATA):
     # A campfire, log and stones by the player's path.
     for x,y,s in [(797,750,.4),(827,743,.35),(840,766,.38),(808,781,.32)]:rock(x,y,s)
     path('M800 769l32-10m-25-11 21 29','none',stroke='#72512d',stroke_width=8)
+    motion('campfire-flame', 817, 771)
     poly([(804,762),(808,748),(816,740),(814,754),(827,746),(830,759),(822,771),(811,772)],'#c57431');poly([(811,765),(816,751),(818,760),(823,756),(821,768)],'#e1b454')
+    endmotion()
     # Smithing corner fills the previous statistics clearing.
     # A weathered working apron paved with uneven gray slabs.
     poly([(248,676),(613,691),(641,886),(221,871)],'#676d54')
@@ -469,9 +543,17 @@ def render(DATA):
     for yy in [-80,-58,-36]:path(f'M26 {yy}l32-20','none',stroke='#885236',stroke_width=1.6)
     poly([(-34,-58),(-22,-70),(4,-65),(14,-51),(14,-15),(-36,-24)],'#99958a')
     poly([(-29,-55),(-19,-63),(0,-60),(8,-49),(8,-21),(-30,-28)],'#282a22')
+    motion('furnace-flame', -11, -25)
     poly([(-28,-28),(-28,-40),(-23,-47),(-17,-39),(-10,-56),(-1,-42),(5,-49),(6,-23)],'#c96a23')
     poly([(-23,-29),(-18,-43),(-11,-36),(-7,-51),(-1,-39),(3,-26)],'#efb735')
     poly([(-16,-31),(-10,-42),(-7,-33),(-1,-28)],'#ffe775')
+    endmotion()
+    add('<g clip-path="url(#firebox-clip)">')
+    for xx,yy,delay in [(-15,-33,0),(-3,-32,-1.8)]:
+     add(f'<g class="motion transient furnace-ember" style="animation-delay:{delay}s">')
+     rect(xx,yy,1.5,2,'#ffd979')
+     add('</g>')
+    add('</g>')
     path('M-35-21l48 9','none',stroke='#575c55',stroke_width=3)
     # Tall tapering flue with a clearly visible square chimney opening.
     poly([(-38,-89),(-19,-160),(13,-152),(27,-77)],'#78482e')

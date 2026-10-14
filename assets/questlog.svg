@@ -1,8 +1,61 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1000" viewBox="0 0 1400 1000" role="img" aria-labelledby="title desc"><title id="title">RuneScape contribution garden — quest-log variant</title><desc id="desc">A high overhead RuneScape-style garden, with 182 daily contribution tiles from Cameron's actual GitHub activity, 2026-04-16 through 2026-10-14. 1,908 contributions, 173 active days, a 45-day best streak, and a 19-day current streak. A player in full rune armour carries a dragon scimitar without a shield; a blue-robed wizard carries a staff of fire, and goblins wander near the trees. A third human chops a willow with a rune axe, beside a rooted stump and logs. A plain iron-bound bank deposit chest, pointed rail fencing, mining rocks fishing ripples and an angular white-patched cow evoke the skilling areas of RuneScape. A fourth human smith works a hot bar beside a tapered brick furnace. An OSRS-inspired stone-framed quest list presents the same real statistics at lower right. The current day is partial.</desc><defs>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1000" viewBox="0 0 1400 1000" role="img" aria-labelledby="title desc"><title id="title">RuneScape contribution garden — quest-log variant</title><desc id="desc">A high overhead RuneScape-style garden, with 182 daily contribution tiles from Cameron's actual GitHub activity, 2026-04-16 through 2026-10-14. 1,910 contributions, 173 active days, a 45-day best streak, and a 19-day current streak. A player in full rune armour carries a dragon scimitar without a shield; a blue-robed wizard carries a staff of fire, and goblins wander near the trees. A third human chops a willow with a rune axe, beside a rooted stump and logs. A plain iron-bound bank deposit chest, pointed rail fencing, mining rocks fishing ripples and an angular white-patched cow evoke the skilling areas of RuneScape. A fourth human smith works a hot bar beside a tapered brick furnace. An OSRS-inspired stone-framed quest list presents the same real statistics at lower right. The current day is partial.</desc><defs>
 <radialGradient id="vignette"><stop offset=".55" stop-color="#132614" stop-opacity="0"/><stop offset="1" stop-color="#142417" stop-opacity=".35"/></radialGradient>
 <radialGradient id="lamp"><stop stop-color="#ffd691" stop-opacity=".5"/><stop offset="1" stop-color="#ffc873" stop-opacity="0"/></radialGradient>
 <g id="tuft"><path d="M-4 4l-5-9 8 4 3-10 3 10 8-4-5 9z" fill="#688740"/><path d="M0 3l2-9 2 9z" fill="#93a555"/></g>
+<clipPath id="firebox-clip"><path d="M-29-55L-19-63 0-60 8-49 8-21-30-28Z"/></clipPath>
 </defs>
+<style>
+.motion { transform-box: view-box; transform-origin: 0px 0px; }
+.transient { opacity: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .woodcut-swing { animation: quest-chop 4.8s infinite; }
+  .pond-ripple { animation: quest-ripple 4.8s linear infinite; }
+  .furnace-flame { animation: quest-furnace 4.8s ease-in-out infinite; }
+  .furnace-ember { animation: quest-ember 3.6s linear infinite; }
+  .campfire-flame { animation: quest-campfire 3.6s ease-in-out infinite; }
+  .hero-idle { animation: quest-idle 7.2s ease-in-out infinite; }
+}
+@keyframes quest-chop {
+  0%, 12%, 100% { transform: rotate(0deg); animation-timing-function: ease-in-out; }
+  31% { transform: rotate(28deg); animation-timing-function: cubic-bezier(.55,.04,.85,.35); }
+  42% { transform: rotate(-38deg); animation-timing-function: ease-out; }
+  48%, 66% { transform: rotate(-35deg); animation-timing-function: ease-in-out; }
+  88% { transform: rotate(0deg); }
+}
+@keyframes quest-ripple {
+  0% { transform: scale(.64); opacity: 0; }
+  18% { opacity: .62; }
+  65% { opacity: .38; }
+  100% { transform: scale(1.34); opacity: 0; }
+}
+@keyframes quest-furnace {
+  0%, 100% { transform: scale(1,1); opacity: .94; }
+  27% { transform: scale(1,1.045); opacity: 1; }
+  58% { transform: scale(1,.98); opacity: .9; }
+  79% { transform: scale(1,1.025); opacity: .97; }
+}
+@keyframes quest-ember {
+  0%, 16% { transform: translate(0px,0px); opacity: 0; }
+  30% { opacity: .68; }
+  76% { opacity: .34; }
+  92%, 100% { transform: translate(2px,-17px); opacity: 0; }
+}
+@keyframes quest-campfire {
+  0%, 100% { transform: scale(1,1) rotate(0deg); }
+  30% { transform: scale(.98,1.06) rotate(1deg); }
+  63% { transform: scale(1.015,.97) rotate(-1deg); }
+  82% { transform: scale(.99,1.03) rotate(.5deg); }
+}
+@keyframes quest-idle {
+  0%, 100% { transform: rotate(0deg); }
+  35% { transform: rotate(.55deg); }
+  72% { transform: rotate(-.35deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .motion { animation: none !important; }
+  .transient { opacity: 0 !important; }
+}
+</style>
 <rect x="0" y="0" width="1400" height="1000" fill="#516e35" />
 <path d="M0.00 0.00L420.00 0.00L326.00 182.00L0.00 279.00Z" fill="#5e783b" />
 <path d="M420.00 0.00L868.00 0.00L1003.00 186.00L326.00 182.00Z" fill="#59763a" />
@@ -375,9 +428,18 @@
 <rect x="1233" y="91" width="4" height="9" fill="#745d31" />
 <path d="M1247 54l3-25m1 25 9-20m-8 19-7-15" fill="none" stroke="#526f30" stroke-width="3"/>
 <rect x="1248" y="26" width="4" height="9" fill="#745d31" />
+<g data-motion-pivot="pond-ripple" transform="translate(1160 77)">
+<g class="motion pond-ripple" style="animation-delay:-0.0s"><g transform="translate(-1160 -77)">
 <ellipse cx="1160" cy="77" rx="13" ry="5" fill="none" stroke="#bbc7b2" stroke-width="1.2" opacity=".7"/>
+</g></g></g>
+<g data-motion-pivot="pond-ripple" transform="translate(1176 91)">
+<g class="motion pond-ripple" style="animation-delay:-1.6s"><g transform="translate(-1176 -91)">
 <ellipse cx="1176" cy="91" rx="18" ry="6" fill="none" stroke="#bbc7b2" stroke-width="1.2" opacity=".7"/>
+</g></g></g>
+<g data-motion-pivot="pond-ripple" transform="translate(1190 75)">
+<g class="motion pond-ripple" style="animation-delay:-3.2s"><g transform="translate(-1190 -75)">
 <ellipse cx="1190" cy="75" rx="9" ry="4" fill="none" stroke="#bbc7b2" stroke-width="1.2" opacity=".7"/>
+</g></g></g>
 <path d="M1175 83l4-8 3 8m-8 6h9" fill="none" stroke="#d3d6bb" stroke-width="1.5"/>
 <g transform="translate(50 100) scale(1.2)">
 <ellipse cx="12" cy="23" rx="49" ry="28" fill="#1d3520" opacity=".3"/>
@@ -3746,7 +3808,7 @@
 <path d="M1081.72 516.66L1110.82 516.66L1107.78 539.84L1078.68 539.84Z" fill="none" stroke="#304525" stroke-width="0.65" stroke-opacity="0.5"/>
 <path d="M1081.72 516.66L1110.82 516.66L1110.66 517.88L1081.56 517.88Z" fill="#e1e6b0" opacity="0.2"/>
 </g>
-<g data-date="2026-10-14" data-count="5"><title>2026-10-14: 5 contributions</title>
+<g data-date="2026-10-14" data-count="7"><title>2026-10-14: 7 contributions</title>
 <path d="M1114.18 539.84L1143.28 539.84L1143.28 546.84L1114.18 546.84Z" fill="#35663c" />
 <path d="M1146.32 516.66L1143.28 539.84L1143.28 546.84L1146.32 523.66Z" fill="#437d43" />
 <path d="M1117.22 516.66L1146.32 516.66L1143.28 539.84L1114.18 539.84Z" fill="#5b9851" />
@@ -3849,6 +3911,8 @@
 <path d="M-10.00 -58.00L-7.00 -67.00L3.00 -70.00L5.00 -61.00L-1.00 -54.00L-13.00 -53.00Z" fill="#dfc494" />
 <path d="M-13.00 -57.00L-17.00 -54.00L-13.00 -52.00L-10.00 -48.00L-5.00 -47.00L-4.00 -55.00Z" fill="#b79262" />
 <path d="M-12.00 -57.00L-9.00 -57.00L-10.00 -55.00Z" fill="#3d3727" />
+<g data-motion-pivot="woodcut-swing" transform="translate(-11 -35)">
+<g class="motion woodcut-swing"><g transform="translate(11 35)">
 <path d="M-13.00 -39.00L-20.00 -33.00L-18.00 -23.00L-10.00 -23.00L-6.00 -32.00Z" fill="#b2aa67" />
 <path d="M-18.00 -25.00L-12.00 -25.00L-14.00 -20.00L-29.00 -23.00L-31.00 -28.00L-26.00 -30.00Z" fill="#d0ad7c" />
 <path d="M-30.00 -30.00L-24.00 -28.00L-24.00 -22.00L-30.00 -23.00Z" fill="#879194" />
@@ -3858,6 +3922,7 @@
 <path d="M-40.00 -67.00L-46.00 -65.00L-49.00 -58.00L-44.00 -57.00L-42.00 -62.00Z" fill="#aec1be" />
 <path d="M-30.00 -60.00L-40.00 -67.00L-42.00 -62.00L-30.00 -57.00L-23.00 -58.00L-23.00 -61.00Z" fill="#719baa" />
 <path d="M-32.00 -28.00L-26.00 -28.00L-25.00 -23.00L-28.00 -20.00L-33.00 -23.00Z" fill="#d4b07b" />
+</g></g></g>
 </g>
 <g transform="translate(699 148) scale(0.85 0.85)">
 <ellipse cx="4" cy="16" rx="24" ry="12" fill="#263b26" opacity=".27"/>
@@ -3960,6 +4025,8 @@
 <path d="M-13.00 -15.00L12.00 -15.00L14.00 -2.00L5.00 4.00L-1.00 -2.00L-8.00 4.00L-15.00 0.00Z" fill="#577d86" />
 <path d="M-13.00 -15.00L-1.00 -13.00L-1.00 -2.00L-8.00 4.00L-15.00 0.00Z" fill="#75949a" />
 <path d="M-12-16l11 3 13-3" fill="none" stroke="#483e30" stroke-width="4"/>
+<g data-motion-pivot="hero-idle" transform="translate(0 -14)">
+<g class="motion hero-idle"><g transform="translate(0 14)">
 <path d="M-12.00 -37.00L-5.00 -43.00L7.00 -41.00L16.00 -33.00L12.00 -17.00L0.00 -13.00L-12.00 -18.00L-18.00 -31.00Z" fill="#527684" />
 <path d="M-12.00 -37.00L-5.00 -43.00L0.00 -33.00L-1.00 -19.00L-12.00 -18.00L-18.00 -31.00Z" fill="#81a0a7" />
 <path d="M0.00 -33.00L7.00 -41.00L16.00 -33.00L12.00 -17.00L-1.00 -19.00Z" fill="#486c7a" />
@@ -3993,6 +4060,7 @@
 <path d="M23.00 -10.00L24.00 -8.00L28.00 -7.00L35.00 0.00L40.00 1.00L39.00 2.00L33.00 -1.00L27.00 -5.00L22.00 -6.00Z" fill="#85827c" />
 <path d="M25.00 -1.00L27.00 -4.00L31.00 -2.00L32.00 1.00L28.00 4.00L25.00 2.00Z" fill="#618793" />
 <path d="M27-1l3 2" fill="none" stroke="#3d616e" stroke-width="0.8"/>
+</g></g></g>
 </g>
 <g transform="translate(709 867) scale(0.88)">
 <ellipse cx="-2" cy="54" rx="78" ry="17" fill="#263920" opacity=".3"/>
@@ -4478,8 +4546,11 @@
 <path d="M-18.00 9.00L-15.00 -7.00L6.00 4.00L9.00 21.00Z" fill="#8a8e71" />
 </g>
 <path d="M800 769l32-10m-25-11 21 29" fill="none" stroke="#72512d" stroke-width="8"/>
+<g data-motion-pivot="campfire-flame" transform="translate(817 771)">
+<g class="motion campfire-flame"><g transform="translate(-817 -771)">
 <path d="M804.00 762.00L808.00 748.00L816.00 740.00L814.00 754.00L827.00 746.00L830.00 759.00L822.00 771.00L811.00 772.00Z" fill="#c57431" />
 <path d="M811.00 765.00L816.00 751.00L818.00 760.00L823.00 756.00L821.00 768.00Z" fill="#e1b454" />
+</g></g></g>
 <path d="M248.00 676.00L613.00 691.00L641.00 886.00L221.00 871.00Z" fill="#676d54" />
 <path d="M253.00 682.00L605.00 697.00L632.00 877.00L230.00 863.00Z" fill="#82846a" />
 <path d="M242.00 686.00L285.00 688.00L287.00 718.00L239.00 715.00Z" fill="#8c8c73" />
@@ -4554,9 +4625,20 @@
 <path d="M26 -36l32-20" fill="none" stroke="#885236" stroke-width="1.6"/>
 <path d="M-34.00 -58.00L-22.00 -70.00L4.00 -65.00L14.00 -51.00L14.00 -15.00L-36.00 -24.00Z" fill="#99958a" />
 <path d="M-29.00 -55.00L-19.00 -63.00L0.00 -60.00L8.00 -49.00L8.00 -21.00L-30.00 -28.00Z" fill="#282a22" />
+<g data-motion-pivot="furnace-flame" transform="translate(-11 -25)">
+<g class="motion furnace-flame"><g transform="translate(11 25)">
 <path d="M-28.00 -28.00L-28.00 -40.00L-23.00 -47.00L-17.00 -39.00L-10.00 -56.00L-1.00 -42.00L5.00 -49.00L6.00 -23.00Z" fill="#c96a23" />
 <path d="M-23.00 -29.00L-18.00 -43.00L-11.00 -36.00L-7.00 -51.00L-1.00 -39.00L3.00 -26.00Z" fill="#efb735" />
 <path d="M-16.00 -31.00L-10.00 -42.00L-7.00 -33.00L-1.00 -28.00Z" fill="#ffe775" />
+</g></g></g>
+<g clip-path="url(#firebox-clip)">
+<g class="motion transient furnace-ember" style="animation-delay:0s">
+<rect x="-15" y="-33" width="1.5" height="2" fill="#ffd979" />
+</g>
+<g class="motion transient furnace-ember" style="animation-delay:-1.8s">
+<rect x="-3" y="-32" width="1.5" height="2" fill="#ffd979" />
+</g>
+</g>
 <path d="M-35-21l48 9" fill="none" stroke="#575c55" stroke-width="3"/>
 <path d="M-38.00 -89.00L-19.00 -160.00L13.00 -152.00L27.00 -77.00Z" fill="#78482e" />
 <path d="M13.00 -152.00L37.00 -170.00L49.00 -96.00L27.00 -77.00Z" fill="#583a28" />
@@ -5010,9 +5092,9 @@
 <path d="M996.70 716.00h10.80v2.70h-10.80zM994.00 718.70h2.70v2.70h-2.70zM994.00 721.40h2.70v2.70h-2.70zM994.00 724.10h2.70v2.70h-2.70zM994.00 726.80h2.70v2.70h-2.70zM994.00 729.50h2.70v2.70h-2.70zM996.70 732.20h10.80v2.70h-10.80zM1012.90 721.40h8.10v2.70h-8.10zM1010.20 724.10h2.70v2.70h-2.70zM1021.00 724.10h2.70v2.70h-2.70zM1010.20 726.80h2.70v2.70h-2.70zM1021.00 726.80h2.70v2.70h-2.70zM1010.20 729.50h2.70v2.70h-2.70zM1021.00 729.50h2.70v2.70h-2.70zM1012.90 732.20h8.10v2.70h-8.10zM1026.40 721.40h2.70v2.70h-2.70zM1031.80 721.40h5.40v2.70h-5.40zM1026.40 724.10h5.40v2.70h-5.40zM1037.20 724.10h2.70v2.70h-2.70zM1026.40 726.80h2.70v2.70h-2.70zM1037.20 726.80h2.70v2.70h-2.70zM1026.40 729.50h2.70v2.70h-2.70zM1037.20 729.50h2.70v2.70h-2.70zM1026.40 732.20h2.70v2.70h-2.70zM1037.20 732.20h2.70v2.70h-2.70zM1045.30 716.00h2.70v2.70h-2.70zM1045.30 718.70h2.70v2.70h-2.70zM1042.60 721.40h8.10v2.70h-8.10zM1045.30 724.10h2.70v2.70h-2.70zM1045.30 726.80h2.70v2.70h-2.70zM1045.30 729.50h2.70v2.70h-2.70zM1050.70 729.50h2.70v2.70h-2.70zM1048.00 732.20h2.70v2.70h-2.70zM1056.10 721.40h2.70v2.70h-2.70zM1061.50 721.40h5.40v2.70h-5.40zM1056.10 724.10h5.40v2.70h-5.40zM1056.10 726.80h2.70v2.70h-2.70zM1056.10 729.50h2.70v2.70h-2.70zM1056.10 732.20h2.70v2.70h-2.70zM1069.60 716.00h2.70v2.70h-2.70zM1069.60 721.40h2.70v2.70h-2.70zM1069.60 724.10h2.70v2.70h-2.70zM1069.60 726.80h2.70v2.70h-2.70zM1069.60 729.50h2.70v2.70h-2.70zM1069.60 732.20h2.70v2.70h-2.70zM1075.00 716.00h2.70v2.70h-2.70zM1075.00 718.70h2.70v2.70h-2.70zM1075.00 721.40h2.70v2.70h-2.70zM1080.40 721.40h5.40v2.70h-5.40zM1075.00 724.10h5.40v2.70h-5.40zM1085.80 724.10h2.70v2.70h-2.70zM1075.00 726.80h2.70v2.70h-2.70zM1085.80 726.80h2.70v2.70h-2.70zM1075.00 729.50h2.70v2.70h-2.70zM1085.80 729.50h2.70v2.70h-2.70zM1075.00 732.20h10.80v2.70h-10.80zM1091.20 721.40h2.70v2.70h-2.70zM1102.00 721.40h2.70v2.70h-2.70zM1091.20 724.10h2.70v2.70h-2.70zM1102.00 724.10h2.70v2.70h-2.70zM1091.20 726.80h2.70v2.70h-2.70zM1102.00 726.80h2.70v2.70h-2.70zM1091.20 729.50h2.70v2.70h-2.70zM1099.30 729.50h5.40v2.70h-5.40zM1093.90 732.20h5.40v2.70h-5.40zM1102.00 732.20h2.70v2.70h-2.70zM1110.10 716.00h2.70v2.70h-2.70zM1110.10 718.70h2.70v2.70h-2.70zM1107.40 721.40h8.10v2.70h-8.10zM1110.10 724.10h2.70v2.70h-2.70zM1110.10 726.80h2.70v2.70h-2.70zM1110.10 729.50h2.70v2.70h-2.70zM1115.50 729.50h2.70v2.70h-2.70zM1112.80 732.20h2.70v2.70h-2.70zM1120.90 716.00h2.70v2.70h-2.70zM1120.90 721.40h2.70v2.70h-2.70zM1120.90 724.10h2.70v2.70h-2.70zM1120.90 726.80h2.70v2.70h-2.70zM1120.90 729.50h2.70v2.70h-2.70zM1120.90 732.20h2.70v2.70h-2.70zM1129.00 721.40h8.10v2.70h-8.10zM1126.30 724.10h2.70v2.70h-2.70zM1137.10 724.10h2.70v2.70h-2.70zM1126.30 726.80h2.70v2.70h-2.70zM1137.10 726.80h2.70v2.70h-2.70zM1126.30 729.50h2.70v2.70h-2.70zM1137.10 729.50h2.70v2.70h-2.70zM1129.00 732.20h8.10v2.70h-8.10zM1142.50 721.40h2.70v2.70h-2.70zM1147.90 721.40h5.40v2.70h-5.40zM1142.50 724.10h5.40v2.70h-5.40zM1153.30 724.10h2.70v2.70h-2.70zM1142.50 726.80h2.70v2.70h-2.70zM1153.30 726.80h2.70v2.70h-2.70zM1142.50 729.50h2.70v2.70h-2.70zM1153.30 729.50h2.70v2.70h-2.70zM1142.50 732.20h2.70v2.70h-2.70zM1153.30 732.20h2.70v2.70h-2.70zM1161.40 721.40h10.80v2.70h-10.80zM1158.70 724.10h2.70v2.70h-2.70zM1161.40 726.80h8.10v2.70h-8.10zM1169.50 729.50h2.70v2.70h-2.70zM1158.70 732.20h10.80v2.70h-10.80z" fill="#16130d" transform="translate(1.6 1.8)"/>
 <path d="M996.70 716.00h10.80v2.70h-10.80zM994.00 718.70h2.70v2.70h-2.70zM994.00 721.40h2.70v2.70h-2.70zM994.00 724.10h2.70v2.70h-2.70zM994.00 726.80h2.70v2.70h-2.70zM994.00 729.50h2.70v2.70h-2.70zM996.70 732.20h10.80v2.70h-10.80zM1012.90 721.40h8.10v2.70h-8.10zM1010.20 724.10h2.70v2.70h-2.70zM1021.00 724.10h2.70v2.70h-2.70zM1010.20 726.80h2.70v2.70h-2.70zM1021.00 726.80h2.70v2.70h-2.70zM1010.20 729.50h2.70v2.70h-2.70zM1021.00 729.50h2.70v2.70h-2.70zM1012.90 732.20h8.10v2.70h-8.10zM1026.40 721.40h2.70v2.70h-2.70zM1031.80 721.40h5.40v2.70h-5.40zM1026.40 724.10h5.40v2.70h-5.40zM1037.20 724.10h2.70v2.70h-2.70zM1026.40 726.80h2.70v2.70h-2.70zM1037.20 726.80h2.70v2.70h-2.70zM1026.40 729.50h2.70v2.70h-2.70zM1037.20 729.50h2.70v2.70h-2.70zM1026.40 732.20h2.70v2.70h-2.70zM1037.20 732.20h2.70v2.70h-2.70zM1045.30 716.00h2.70v2.70h-2.70zM1045.30 718.70h2.70v2.70h-2.70zM1042.60 721.40h8.10v2.70h-8.10zM1045.30 724.10h2.70v2.70h-2.70zM1045.30 726.80h2.70v2.70h-2.70zM1045.30 729.50h2.70v2.70h-2.70zM1050.70 729.50h2.70v2.70h-2.70zM1048.00 732.20h2.70v2.70h-2.70zM1056.10 721.40h2.70v2.70h-2.70zM1061.50 721.40h5.40v2.70h-5.40zM1056.10 724.10h5.40v2.70h-5.40zM1056.10 726.80h2.70v2.70h-2.70zM1056.10 729.50h2.70v2.70h-2.70zM1056.10 732.20h2.70v2.70h-2.70zM1069.60 716.00h2.70v2.70h-2.70zM1069.60 721.40h2.70v2.70h-2.70zM1069.60 724.10h2.70v2.70h-2.70zM1069.60 726.80h2.70v2.70h-2.70zM1069.60 729.50h2.70v2.70h-2.70zM1069.60 732.20h2.70v2.70h-2.70zM1075.00 716.00h2.70v2.70h-2.70zM1075.00 718.70h2.70v2.70h-2.70zM1075.00 721.40h2.70v2.70h-2.70zM1080.40 721.40h5.40v2.70h-5.40zM1075.00 724.10h5.40v2.70h-5.40zM1085.80 724.10h2.70v2.70h-2.70zM1075.00 726.80h2.70v2.70h-2.70zM1085.80 726.80h2.70v2.70h-2.70zM1075.00 729.50h2.70v2.70h-2.70zM1085.80 729.50h2.70v2.70h-2.70zM1075.00 732.20h10.80v2.70h-10.80zM1091.20 721.40h2.70v2.70h-2.70zM1102.00 721.40h2.70v2.70h-2.70zM1091.20 724.10h2.70v2.70h-2.70zM1102.00 724.10h2.70v2.70h-2.70zM1091.20 726.80h2.70v2.70h-2.70zM1102.00 726.80h2.70v2.70h-2.70zM1091.20 729.50h2.70v2.70h-2.70zM1099.30 729.50h5.40v2.70h-5.40zM1093.90 732.20h5.40v2.70h-5.40zM1102.00 732.20h2.70v2.70h-2.70zM1110.10 716.00h2.70v2.70h-2.70zM1110.10 718.70h2.70v2.70h-2.70zM1107.40 721.40h8.10v2.70h-8.10zM1110.10 724.10h2.70v2.70h-2.70zM1110.10 726.80h2.70v2.70h-2.70zM1110.10 729.50h2.70v2.70h-2.70zM1115.50 729.50h2.70v2.70h-2.70zM1112.80 732.20h2.70v2.70h-2.70zM1120.90 716.00h2.70v2.70h-2.70zM1120.90 721.40h2.70v2.70h-2.70zM1120.90 724.10h2.70v2.70h-2.70zM1120.90 726.80h2.70v2.70h-2.70zM1120.90 729.50h2.70v2.70h-2.70zM1120.90 732.20h2.70v2.70h-2.70zM1129.00 721.40h8.10v2.70h-8.10zM1126.30 724.10h2.70v2.70h-2.70zM1137.10 724.10h2.70v2.70h-2.70zM1126.30 726.80h2.70v2.70h-2.70zM1137.10 726.80h2.70v2.70h-2.70zM1126.30 729.50h2.70v2.70h-2.70zM1137.10 729.50h2.70v2.70h-2.70zM1129.00 732.20h8.10v2.70h-8.10zM1142.50 721.40h2.70v2.70h-2.70zM1147.90 721.40h5.40v2.70h-5.40zM1142.50 724.10h5.40v2.70h-5.40zM1153.30 724.10h2.70v2.70h-2.70zM1142.50 726.80h2.70v2.70h-2.70zM1153.30 726.80h2.70v2.70h-2.70zM1142.50 729.50h2.70v2.70h-2.70zM1153.30 729.50h2.70v2.70h-2.70zM1142.50 732.20h2.70v2.70h-2.70zM1153.30 732.20h2.70v2.70h-2.70zM1161.40 721.40h10.80v2.70h-10.80zM1158.70 724.10h2.70v2.70h-2.70zM1161.40 726.80h8.10v2.70h-8.10zM1169.50 729.50h2.70v2.70h-2.70zM1158.70 732.20h10.80v2.70h-10.80z" fill="#5fdf32" />
 </g>
-<g role="img" aria-label="1,908" data-ui-text="1,908"><title>1,908</title>
-<path d="M1217.40 710.00h4.20v4.20h-4.20zM1213.20 714.20h8.40v4.20h-8.40zM1217.40 718.40h4.20v4.20h-4.20zM1217.40 722.60h4.20v4.20h-4.20zM1217.40 726.80h4.20v4.20h-4.20zM1217.40 731.00h4.20v4.20h-4.20zM1213.20 735.20h12.60v4.20h-12.60zM1234.20 731.00h4.20v4.20h-4.20zM1230.00 735.20h4.20v4.20h-4.20zM1246.80 710.00h12.60v4.20h-12.60zM1242.60 714.20h4.20v4.20h-4.20zM1259.40 714.20h4.20v4.20h-4.20zM1242.60 718.40h4.20v4.20h-4.20zM1259.40 718.40h4.20v4.20h-4.20zM1246.80 722.60h16.80v4.20h-16.80zM1259.40 726.80h4.20v4.20h-4.20zM1259.40 731.00h4.20v4.20h-4.20zM1246.80 735.20h12.60v4.20h-12.60zM1272.00 710.00h12.60v4.20h-12.60zM1267.80 714.20h4.20v4.20h-4.20zM1284.60 714.20h4.20v4.20h-4.20zM1267.80 718.40h4.20v4.20h-4.20zM1280.40 718.40h8.40v4.20h-8.40zM1267.80 722.60h4.20v4.20h-4.20zM1276.20 722.60h4.20v4.20h-4.20zM1284.60 722.60h4.20v4.20h-4.20zM1267.80 726.80h8.40v4.20h-8.40zM1284.60 726.80h4.20v4.20h-4.20zM1267.80 731.00h4.20v4.20h-4.20zM1284.60 731.00h4.20v4.20h-4.20zM1272.00 735.20h12.60v4.20h-12.60zM1297.20 710.00h12.60v4.20h-12.60zM1293.00 714.20h4.20v4.20h-4.20zM1309.80 714.20h4.20v4.20h-4.20zM1293.00 718.40h4.20v4.20h-4.20zM1309.80 718.40h4.20v4.20h-4.20zM1297.20 722.60h12.60v4.20h-12.60zM1293.00 726.80h4.20v4.20h-4.20zM1309.80 726.80h4.20v4.20h-4.20zM1293.00 731.00h4.20v4.20h-4.20zM1309.80 731.00h4.20v4.20h-4.20zM1297.20 735.20h12.60v4.20h-12.60z" fill="#16130d" transform="translate(1.6 1.8)"/>
-<path d="M1217.40 710.00h4.20v4.20h-4.20zM1213.20 714.20h8.40v4.20h-8.40zM1217.40 718.40h4.20v4.20h-4.20zM1217.40 722.60h4.20v4.20h-4.20zM1217.40 726.80h4.20v4.20h-4.20zM1217.40 731.00h4.20v4.20h-4.20zM1213.20 735.20h12.60v4.20h-12.60zM1234.20 731.00h4.20v4.20h-4.20zM1230.00 735.20h4.20v4.20h-4.20zM1246.80 710.00h12.60v4.20h-12.60zM1242.60 714.20h4.20v4.20h-4.20zM1259.40 714.20h4.20v4.20h-4.20zM1242.60 718.40h4.20v4.20h-4.20zM1259.40 718.40h4.20v4.20h-4.20zM1246.80 722.60h16.80v4.20h-16.80zM1259.40 726.80h4.20v4.20h-4.20zM1259.40 731.00h4.20v4.20h-4.20zM1246.80 735.20h12.60v4.20h-12.60zM1272.00 710.00h12.60v4.20h-12.60zM1267.80 714.20h4.20v4.20h-4.20zM1284.60 714.20h4.20v4.20h-4.20zM1267.80 718.40h4.20v4.20h-4.20zM1280.40 718.40h8.40v4.20h-8.40zM1267.80 722.60h4.20v4.20h-4.20zM1276.20 722.60h4.20v4.20h-4.20zM1284.60 722.60h4.20v4.20h-4.20zM1267.80 726.80h8.40v4.20h-8.40zM1284.60 726.80h4.20v4.20h-4.20zM1267.80 731.00h4.20v4.20h-4.20zM1284.60 731.00h4.20v4.20h-4.20zM1272.00 735.20h12.60v4.20h-12.60zM1297.20 710.00h12.60v4.20h-12.60zM1293.00 714.20h4.20v4.20h-4.20zM1309.80 714.20h4.20v4.20h-4.20zM1293.00 718.40h4.20v4.20h-4.20zM1309.80 718.40h4.20v4.20h-4.20zM1297.20 722.60h12.60v4.20h-12.60zM1293.00 726.80h4.20v4.20h-4.20zM1309.80 726.80h4.20v4.20h-4.20zM1293.00 731.00h4.20v4.20h-4.20zM1309.80 731.00h4.20v4.20h-4.20zM1297.20 735.20h12.60v4.20h-12.60z" fill="#e9ef77" />
+<g role="img" aria-label="1,910" data-ui-text="1,910"><title>1,910</title>
+<path d="M1225.80 710.00h4.20v4.20h-4.20zM1221.60 714.20h8.40v4.20h-8.40zM1225.80 718.40h4.20v4.20h-4.20zM1225.80 722.60h4.20v4.20h-4.20zM1225.80 726.80h4.20v4.20h-4.20zM1225.80 731.00h4.20v4.20h-4.20zM1221.60 735.20h12.60v4.20h-12.60zM1242.60 731.00h4.20v4.20h-4.20zM1238.40 735.20h4.20v4.20h-4.20zM1255.20 710.00h12.60v4.20h-12.60zM1251.00 714.20h4.20v4.20h-4.20zM1267.80 714.20h4.20v4.20h-4.20zM1251.00 718.40h4.20v4.20h-4.20zM1267.80 718.40h4.20v4.20h-4.20zM1255.20 722.60h16.80v4.20h-16.80zM1267.80 726.80h4.20v4.20h-4.20zM1267.80 731.00h4.20v4.20h-4.20zM1255.20 735.20h12.60v4.20h-12.60zM1280.40 710.00h4.20v4.20h-4.20zM1276.20 714.20h8.40v4.20h-8.40zM1280.40 718.40h4.20v4.20h-4.20zM1280.40 722.60h4.20v4.20h-4.20zM1280.40 726.80h4.20v4.20h-4.20zM1280.40 731.00h4.20v4.20h-4.20zM1276.20 735.20h12.60v4.20h-12.60zM1297.20 710.00h12.60v4.20h-12.60zM1293.00 714.20h4.20v4.20h-4.20zM1309.80 714.20h4.20v4.20h-4.20zM1293.00 718.40h4.20v4.20h-4.20zM1305.60 718.40h8.40v4.20h-8.40zM1293.00 722.60h4.20v4.20h-4.20zM1301.40 722.60h4.20v4.20h-4.20zM1309.80 722.60h4.20v4.20h-4.20zM1293.00 726.80h8.40v4.20h-8.40zM1309.80 726.80h4.20v4.20h-4.20zM1293.00 731.00h4.20v4.20h-4.20zM1309.80 731.00h4.20v4.20h-4.20zM1297.20 735.20h12.60v4.20h-12.60z" fill="#16130d" transform="translate(1.6 1.8)"/>
+<path d="M1225.80 710.00h4.20v4.20h-4.20zM1221.60 714.20h8.40v4.20h-8.40zM1225.80 718.40h4.20v4.20h-4.20zM1225.80 722.60h4.20v4.20h-4.20zM1225.80 726.80h4.20v4.20h-4.20zM1225.80 731.00h4.20v4.20h-4.20zM1221.60 735.20h12.60v4.20h-12.60zM1242.60 731.00h4.20v4.20h-4.20zM1238.40 735.20h4.20v4.20h-4.20zM1255.20 710.00h12.60v4.20h-12.60zM1251.00 714.20h4.20v4.20h-4.20zM1267.80 714.20h4.20v4.20h-4.20zM1251.00 718.40h4.20v4.20h-4.20zM1267.80 718.40h4.20v4.20h-4.20zM1255.20 722.60h16.80v4.20h-16.80zM1267.80 726.80h4.20v4.20h-4.20zM1267.80 731.00h4.20v4.20h-4.20zM1255.20 735.20h12.60v4.20h-12.60zM1280.40 710.00h4.20v4.20h-4.20zM1276.20 714.20h8.40v4.20h-8.40zM1280.40 718.40h4.20v4.20h-4.20zM1280.40 722.60h4.20v4.20h-4.20zM1280.40 726.80h4.20v4.20h-4.20zM1280.40 731.00h4.20v4.20h-4.20zM1276.20 735.20h12.60v4.20h-12.60zM1297.20 710.00h12.60v4.20h-12.60zM1293.00 714.20h4.20v4.20h-4.20zM1309.80 714.20h4.20v4.20h-4.20zM1293.00 718.40h4.20v4.20h-4.20zM1305.60 718.40h8.40v4.20h-8.40zM1293.00 722.60h4.20v4.20h-4.20zM1301.40 722.60h4.20v4.20h-4.20zM1309.80 722.60h4.20v4.20h-4.20zM1293.00 726.80h8.40v4.20h-8.40zM1309.80 726.80h4.20v4.20h-4.20zM1293.00 731.00h4.20v4.20h-4.20zM1309.80 731.00h4.20v4.20h-4.20zM1297.20 735.20h12.60v4.20h-12.60z" fill="#e9ef77" />
 </g>
 <g role="img" aria-label="Active days" data-ui-text="Active days"><title>Active days</title>
 <path d="M996.70 764.00h8.10v2.70h-8.10zM994.00 766.70h2.70v2.70h-2.70zM1004.80 766.70h2.70v2.70h-2.70zM994.00 769.40h2.70v2.70h-2.70zM1004.80 769.40h2.70v2.70h-2.70zM994.00 772.10h13.50v2.70h-13.50zM994.00 774.80h2.70v2.70h-2.70zM1004.80 774.80h2.70v2.70h-2.70zM994.00 777.50h2.70v2.70h-2.70zM1004.80 777.50h2.70v2.70h-2.70zM994.00 780.20h2.70v2.70h-2.70zM1004.80 780.20h2.70v2.70h-2.70zM1012.90 769.40h8.10v2.70h-8.10zM1010.20 772.10h2.70v2.70h-2.70zM1010.20 774.80h2.70v2.70h-2.70zM1010.20 777.50h2.70v2.70h-2.70zM1012.90 780.20h8.10v2.70h-8.10zM1026.40 764.00h2.70v2.70h-2.70zM1026.40 766.70h2.70v2.70h-2.70zM1023.70 769.40h8.10v2.70h-8.10zM1026.40 772.10h2.70v2.70h-2.70zM1026.40 774.80h2.70v2.70h-2.70zM1026.40 777.50h2.70v2.70h-2.70zM1031.80 777.50h2.70v2.70h-2.70zM1029.10 780.20h2.70v2.70h-2.70zM1037.20 764.00h2.70v2.70h-2.70zM1037.20 769.40h2.70v2.70h-2.70zM1037.20 772.10h2.70v2.70h-2.70zM1037.20 774.80h2.70v2.70h-2.70zM1037.20 777.50h2.70v2.70h-2.70zM1037.20 780.20h2.70v2.70h-2.70zM1042.60 769.40h2.70v2.70h-2.70zM1053.40 769.40h2.70v2.70h-2.70zM1042.60 772.10h2.70v2.70h-2.70zM1053.40 772.10h2.70v2.70h-2.70zM1042.60 774.80h2.70v2.70h-2.70zM1053.40 774.80h2.70v2.70h-2.70zM1045.30 777.50h2.70v2.70h-2.70zM1050.70 777.50h2.70v2.70h-2.70zM1048.00 780.20h2.70v2.70h-2.70zM1061.50 769.40h8.10v2.70h-8.10zM1058.80 772.10h2.70v2.70h-2.70zM1069.60 772.10h2.70v2.70h-2.70zM1058.80 774.80h13.50v2.70h-13.50zM1058.80 777.50h2.70v2.70h-2.70zM1061.50 780.20h10.80v2.70h-10.80zM1096.60 764.00h2.70v2.70h-2.70zM1096.60 766.70h2.70v2.70h-2.70zM1088.50 769.40h5.40v2.70h-5.40zM1096.60 769.40h2.70v2.70h-2.70zM1085.80 772.10h2.70v2.70h-2.70zM1093.90 772.10h5.40v2.70h-5.40zM1085.80 774.80h2.70v2.70h-2.70zM1096.60 774.80h2.70v2.70h-2.70zM1085.80 777.50h2.70v2.70h-2.70zM1096.60 777.50h2.70v2.70h-2.70zM1088.50 780.20h10.80v2.70h-10.80zM1104.70 769.40h8.10v2.70h-8.10zM1112.80 772.10h2.70v2.70h-2.70zM1104.70 774.80h10.80v2.70h-10.80zM1102.00 777.50h2.70v2.70h-2.70zM1112.80 777.50h2.70v2.70h-2.70zM1104.70 780.20h10.80v2.70h-10.80zM1118.20 769.40h2.70v2.70h-2.70zM1129.00 769.40h2.70v2.70h-2.70zM1118.20 772.10h2.70v2.70h-2.70zM1129.00 772.10h2.70v2.70h-2.70zM1120.90 774.80h10.80v2.70h-10.80zM1129.00 777.50h2.70v2.70h-2.70zM1118.20 780.20h10.80v2.70h-10.80zM1137.10 769.40h10.80v2.70h-10.80zM1134.40 772.10h2.70v2.70h-2.70zM1137.10 774.80h8.10v2.70h-8.10zM1145.20 777.50h2.70v2.70h-2.70zM1134.40 780.20h10.80v2.70h-10.80z" fill="#16130d" transform="translate(1.6 1.8)"/>

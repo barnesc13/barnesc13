@@ -11,7 +11,7 @@
 
 <br clear="both" />
 
-![RuneScape contribution garden with a quest log of my GitHub activity](assets/questlog.svg)
+![RuneScape contribution garden with a quest log of my GitHub activity](assets/questlog.svg?v=animated)
 
 <!--
 **barnesc13/barnesc13** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
