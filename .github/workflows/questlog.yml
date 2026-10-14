@@ -1,0 +1,57 @@
+name: Update RuneScape quest log
+
+on:
+  schedule:
+    # Daily, off the top of the hour. GitHub schedules are best-effort, in UTC.
+    - cron: '17 7 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/questlog.yml'
+      - 'scripts/**'
+      - 'tests/**'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: questlog-${{ github.repository }}
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    # Do not write the main-branch art from a manual run on an unrelated branch.
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - name: Check out the profile
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Test the parser, streaks and renderer
+        run: python3 -m unittest discover -s tests -v
+
+      - name: Fetch public contributions and redraw the approved quest log
+        run: python3 scripts/generate_questlog.py --username barnesc13
+
+      - name: Commit changed art and source data
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- assets/questlog.svg assets/questlog-data.json
+          if git diff --cached --quiet; then
+            echo "Quest log is already current."
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m "Refresh RuneScape contribution quest log"
+          # Preserve README edits or other commits made while this job runs.
+          git pull --rebase origin main
+          git push origin HEAD:main
