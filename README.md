@@ -1,5 +1,3 @@
-## Hi there 👋
-
 - Grew up with a controller in my hands and a computer within reach.
 - At 11, led WoW raids against the Lich King and benched grown men with mortgages. My first management role.
 - At 13, played professional Call of Duty before esports was a thing.
