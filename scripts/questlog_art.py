@@ -6,6 +6,7 @@ Native SVG/CSS motion is decorative only and respects reduced-motion settings.
 """
 import random, math
 from datetime import date
+from calendar_layout import calendar_layout
 
 
 def render(DATA):
@@ -186,8 +187,10 @@ def render(DATA):
      poly([(-30,49),(-24,49),(-21,57),(-34,58)],'#30382e')
      poly([(46,13),(57,13),(54,35),(61,51),(53,55),(44,35)],'#34392a')
      poly([(53,49),(61,49),(65,58),(50,58)],'#353c31')
+     motion('cow-tail', 62, -15)
      path('M62-15l12 15-1 29','none',stroke='#a9ad91',stroke_width=3)
      poly([(70,24),(76,25),(80,34),(72,36),(67,32)],'#353929')
+     endmotion()
      # Large faceted body, with the silhouette and broken patches of the game model.
      poly([(-34,-28),(3,-38),(45,-34),(62,-23),(67,-3),(62,15),(44,28),(4,32),(-31,19),(-45,-4)],'#434731')
      poly([(-34,-28),(3,-38),(45,-34),(27,-18),(-6,-15),(-45,-4)],'#5d6045')
@@ -237,7 +240,7 @@ def render(DATA):
      path('M-88 9l12-1','none',stroke='#878c74',stroke_width=1)
      add('</g>')
 
-    add(f'''<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1000" viewBox="0 0 1400 1000" role="img" aria-labelledby="title desc"><title id="title">RuneScape contribution garden — quest-log variant</title><desc id="desc">A high overhead RuneScape-style garden, with 182 daily contribution tiles from Cameron's actual GitHub activity, {START.isoformat()} through {END.isoformat()}. {STATS['total']:,} contributions, {STATS['activeDays']} active days, a {STATS['bestStreak']}-day best streak, and a {STATS['currentStreakAllowTodayPending']}-day current streak. A player in full rune armour carries a dragon scimitar without a shield; a blue-robed wizard carries a staff of fire, and goblins wander near the trees. A third human chops a willow with a rune axe, beside a rooted stump and logs. A plain iron-bound bank deposit chest, pointed rail fencing, mining rocks fishing ripples and an angular white-patched cow evoke the skilling areas of RuneScape. A fourth human smith works a hot bar beside a tapered brick furnace. An OSRS-inspired stone-framed quest list presents the same real statistics at lower right. The current day is partial.</desc><defs>
+    add(f'''<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1000" viewBox="0 0 1400 1000" role="img" aria-labelledby="title desc"><title id="title">RuneScape contribution garden — quest-log variant</title><desc id="desc">A high overhead RuneScape-style garden, with 182 daily contribution tiles from Cameron's actual GitHub activity, {START.isoformat()} through {END.isoformat()}. {STATS['total']:,} contributions, {STATS['activeDays']} active days, a {STATS['bestStreak']}-day best streak, and a {STATS['currentStreakAllowTodayPending']}-day current streak. A player in full rune armour carries a dragon scimitar without a shield; a blue-robed wizard carries a staff of fire, and goblins wander near the trees. A third human chops a willow with a rune axe, beside a rooted stump and logs. A plain iron-bound bank deposit chest, pointed rail fencing, mining rocks fishing ripples and an angular white-patched cow evoke the skilling areas of RuneScape. A fourth human smith works a hot bar beside a tapered brick furnace. An OSRS-inspired stone-framed quest list presents the same real statistics at lower right. Calendar columns are Sunday-first weeks; blank edge slots fall outside the displayed 182-day window. The current day is partial.</desc><defs>
 <radialGradient id="vignette"><stop offset=".55" stop-color="#132614" stop-opacity="0"/><stop offset="1" stop-color="#142417" stop-opacity=".35"/></radialGradient>
 <radialGradient id="lamp"><stop stop-color="#ffd691" stop-opacity=".5"/><stop offset="1" stop-color="#ffc873" stop-opacity="0"/></radialGradient>
 <g id="tuft"><path d="M-4 4l-5-9 8 4 3-10 3 10 8-4-5 9z" fill="#688740"/><path d="M0 3l2-9 2 9z" fill="#93a555"/></g>
@@ -253,7 +256,13 @@ def render(DATA):
   .pond-ripple { animation: quest-ripple 4.8s linear infinite; }
   .furnace-flame { animation: quest-furnace 4.8s ease-in-out infinite; }
   .furnace-ember { animation: quest-ember 3.6s linear infinite; }
-  .campfire-flame { animation: quest-campfire 3.6s ease-in-out infinite; }
+  .campfire-flame { animation: quest-campfire 2.4s ease-in-out infinite; }
+  .pond-ripple ellipse { stroke-width: 2; }
+  .firebox-motion-clip { clip-path: url(#firebox-clip); }
+  .smith-body { animation: quest-smith-body 3.6s ease-in-out infinite; }
+  .smith-arm { animation: quest-smith-arm 3.6s ease-in-out infinite; }
+  .smith-spark { animation: quest-smith-spark 3.6s linear infinite; }
+  .cow-tail { animation: quest-tail 7.2s ease-in-out infinite; }
   .hero-idle { animation: quest-idle 7.2s ease-in-out infinite; }
 }
 @keyframes quest-chop {
@@ -264,33 +273,60 @@ def render(DATA):
   88% { transform: rotate(0deg); }
 }
 @keyframes quest-ripple {
-  0% { transform: scale(.64); opacity: 0; }
-  18% { opacity: .62; }
-  65% { opacity: .38; }
-  100% { transform: scale(1.34); opacity: 0; }
+  0% { transform: scale(.42); opacity: 0; }
+  18% { opacity: 1; }
+  65% { opacity: .78; }
+  100% { transform: scale(1.78); opacity: 0; }
 }
 @keyframes quest-furnace {
-  0%, 100% { transform: scale(1,1); opacity: .94; }
-  27% { transform: scale(1,1.045); opacity: 1; }
-  58% { transform: scale(1,.98); opacity: .9; }
-  79% { transform: scale(1,1.025); opacity: .97; }
+  0%, 100% { transform: scale(1,1); opacity: .98; }
+  27% { transform: scale(.96,1.25); opacity: 1; }
+  58% { transform: scale(1.06,.79); opacity: .92; }
+  79% { transform: scale(.98,1.16); opacity: 1; }
 }
 @keyframes quest-ember {
   0%, 16% { transform: translate(0px,0px); opacity: 0; }
-  30% { opacity: .68; }
-  76% { opacity: .34; }
-  92%, 100% { transform: translate(2px,-17px); opacity: 0; }
+  30% { opacity: .9; }
+  76% { opacity: .55; }
+  92%, 100% { transform: translate(4px,-24px); opacity: 0; }
 }
 @keyframes quest-campfire {
   0%, 100% { transform: scale(1,1) rotate(0deg); }
-  30% { transform: scale(.98,1.06) rotate(1deg); }
-  63% { transform: scale(1.015,.97) rotate(-1deg); }
-  82% { transform: scale(.99,1.03) rotate(.5deg); }
+  22% { transform: scale(.94,1.35) rotate(-3deg); }
+  45% { transform: scale(1.08,.82) rotate(2deg); }
+  67% { transform: scale(.95,1.25) rotate(1deg); }
+  83% { transform: scale(1.04,1.05) rotate(-2deg); }
 }
 @keyframes quest-idle {
   0%, 100% { transform: rotate(0deg); }
-  35% { transform: rotate(.55deg); }
-  72% { transform: rotate(-.35deg); }
+  35% { transform: rotate(2.2deg); }
+  72% { transform: rotate(-1.4deg); }
+}
+@keyframes quest-smith-body {
+  0%, 14%, 100% { transform: rotate(0deg); }
+  27% { transform: rotate(3deg); }
+  43% { transform: rotate(-26deg); }
+  49%, 60% { transform: rotate(-23deg); }
+  86% { transform: rotate(0deg); }
+}
+@keyframes quest-smith-arm {
+  0%, 14%, 100% { transform: rotate(0deg); }
+  27% { transform: rotate(12deg); animation-timing-function: cubic-bezier(.55,.04,.85,.35); }
+  43% { transform: rotate(-56deg); }
+  49%, 60% { transform: rotate(-50deg); }
+  86% { transform: rotate(0deg); }
+}
+@keyframes quest-smith-spark {
+  0%, 42.5% { transform: translate(0px,0px); opacity: 0; }
+  46% { opacity: .9; }
+  62%, 100% { transform: translate(-12px,-22px); opacity: 0; }
+}
+@keyframes quest-tail {
+  0%, 52%, 100% { transform: rotate(0deg); }
+  62% { transform: rotate(-23deg); }
+  70% { transform: rotate(18deg); }
+  79% { transform: rotate(-13deg); }
+  88% { transform: rotate(7deg); }
 }
 @media (prefers-reduced-motion: reduce) {
   .motion { animation: none !important; }
@@ -384,20 +420,23 @@ def render(DATA):
      poly([(xx-21,yy-4),(xx-7,yy-24),(xx+12,yy-22),(xx+3,yy-3)],'#969b85')
      poly([(xx+3,yy-3),(xx+12,yy-22),(xx+24,yy-5),(xx+20,yy+16)],'#4f5c50')
      for dx,dy in [(-10,-8),(-3,3),(9,-10),(13,8)]:poly([(xx+dx-3,yy+dy),(xx+dx+2,yy+dy-4),(xx+dx+5,yy+dy+1),(xx+dx,yy+dy+4)],ore)
-    # Data: 182 chronologically consecutive days, ending on the UTC run date. Levels are explicitly binned
-    # by actual count for legible geometry; titles preserve precise date and count.
+    # Keep the rolling 182 dates, but align real weeks Sunday through Saturday.
+    # Partial edge weeks have unplanted slots, never synthetic zero counts.
+    # Compress only the horizontal tile spacing to preserve the approved bed bounds.
     C=[('#494a34','#2b3427','#343c29'),('#3c7142','#254c30','#315b35'),('#5b9851','#35663c','#437d43'),('#90bb5a','#567e3a','#6c9444'),('#c6d475','#879c47','#a2b256'),('#e8bf68','#a48339','#c29e49')]
     H=[.8,4,7,11,16,21]
-    for idx,d in sorted(enumerate(DAYS),key=lambda z:(P(z[0]//7,z[0]%7)[1],z[0])):
-     col,row=divmod(idx,7);n=d['count'];lv=0 if n==0 else 1 if n<=3 else 2 if n<=7 else 3 if n<=15 else 4 if n<=31 else 5
-     add(f'<g data-date="{d["date"]}" data-count="{n}"><title>{d["date"]}: {n} contributions</title>')
-     top,left,right=C[lv];block(col+.09,row+.12,.82,.76,H[lv],top,left,right)
-     poly([P(col+.09,row+.12,H[lv]),P(col+.91,row+.12,H[lv]),P(col+.91,row+.88,H[lv]),P(col+.09,row+.88,H[lv])],'none',stroke='#304525',stroke_width=.65,stroke_opacity=.5)
-     # Fine upper facets, light catches the northeast edge of each grass-covered block.
-     ps=[P(col+.09,row+.12,H[lv]),P(col+.91,row+.12,H[lv]),P(col+.91,row+.16,H[lv]),P(col+.09,row+.16,H[lv])]
+    LAYOUT=calendar_layout(DAYS)
+    WEEK_WIDTH=26 / LAYOUT['columns']
+    for cell in sorted(LAYOUT['cells'], key=lambda cell: (cell['row'], cell['column'])):
+     d=cell['day'];col=cell['column'];row=cell['row'];n=d['count'];lv=0 if n==0 else 1 if n<=3 else 2 if n<=7 else 3 if n<=15 else 4 if n<=31 else 5
+     add(f'<g data-date="{d["date"]}" data-count="{n}" data-calendar-column="{col}" data-calendar-row="{row}"><title>{d["date"]}: {n} contributions</title>')
+     x0=(col+.09)*WEEK_WIDTH;x1=(col+.91)*WEEK_WIDTH
+     top,left,right=C[lv];block(x0,row+.12,.82*WEEK_WIDTH,.76,H[lv],top,left,right)
+     poly([P(x0,row+.12,H[lv]),P(x1,row+.12,H[lv]),P(x1,row+.88,H[lv]),P(x0,row+.88,H[lv])],'none',stroke='#304525',stroke_width=.65,stroke_opacity=.5)
+     ps=[P(x0,row+.12,H[lv]),P(x1,row+.12,H[lv]),P(x1,row+.16,H[lv]),P(x0,row+.16,H[lv])]
      poly(ps,'#e1e6b0',opacity=.2)
      if n>=32:
-      x,y=P(col+.3,row+.28,H[lv]);poly([(x,y),(x+5,y+1),(x+4,y+3),(x-1,y+2)],'#eff0bf',opacity=.35)
+      x,y=P((col+.3)*WEEK_WIDTH,row+.28,H[lv]);poly([(x,y),(x+5,y+1),(x+4,y+3),(x-1,y+2)],'#eff0bf',opacity=.35)
      add('</g>')
     # Low-poly rocks, reeds, herbs and flowers live around the plot, never cover cells.
     for x,y,s in [(1280,421,.6),(1308,460,1),(59,500,.6),(122,526,.7),(1090,771,.6),(744,751,.4),(670,828,.65),(470,168,.55)]:rock(x,y,s)
@@ -543,15 +582,17 @@ def render(DATA):
     for yy in [-80,-58,-36]:path(f'M26 {yy}l32-20','none',stroke='#885236',stroke_width=1.6)
     poly([(-34,-58),(-22,-70),(4,-65),(14,-51),(14,-15),(-36,-24)],'#99958a')
     poly([(-29,-55),(-19,-63),(0,-60),(8,-49),(8,-21),(-30,-28)],'#282a22')
+    add('<g class="firebox-motion-clip">')
     motion('furnace-flame', -11, -25)
     poly([(-28,-28),(-28,-40),(-23,-47),(-17,-39),(-10,-56),(-1,-42),(5,-49),(6,-23)],'#c96a23')
     poly([(-23,-29),(-18,-43),(-11,-36),(-7,-51),(-1,-39),(3,-26)],'#efb735')
     poly([(-16,-31),(-10,-42),(-7,-33),(-1,-28)],'#ffe775')
     endmotion()
+    add('</g>')
     add('<g clip-path="url(#firebox-clip)">')
     for xx,yy,delay in [(-15,-33,0),(-3,-32,-1.8)]:
      add(f'<g class="motion transient furnace-ember" style="animation-delay:{delay}s">')
-     rect(xx,yy,1.5,2,'#ffd979')
+     rect(xx,yy,2.5,3,'#ffd979')
      add('</g>')
     add('</g>')
     path('M-35-21l48 9','none',stroke='#575c55',stroke_width=3)
@@ -600,12 +641,16 @@ def render(DATA):
     poly([(0,0),(13,-5),(13,17),(21,26),(14,30),(5,19)],'#655335')
     poly([(-18,22),(-11,25),(-16,32),(-30,31),(-29,28)],'#4a3826')
     poly([(13,25),(20,24),(29,31),(26,35),(13,32)],'#4d3927')
+    # Lean into the stroke around the waist; feet and shadow remain planted.
+    motion('smith-body', 0, -5)
     poly([(-14,-47),(-4,-53),(11,-48),(19,-33),(13,-8),(-12,-7),(-21,-30)],'#64462b')
     poly([(-10,-48),(3,-48),(12,-7),(17,8),(-12,13),(-17,-5)],'#9b682c')
     poly([(-10,-48),(-6,-49),(-7,-15),(-12,13),(-17,-5)],'#b3823b')
     path('M-8-45l4 21m8-22 2 16','none',stroke='#c99543',stroke_width=2)
     poly([(10,-46),(20,-36),(24,-24),(17,-20),(9,-32)],'#b08a5b')
     poly([(17,-23),(24,-24),(21,-8),(14,-1),(10,-6)],'#6f4b2b')
+    # Shoulder and waist together bring the hammer down onto the hot blank.
+    motion("smith-arm", -17, -45)
     # Raised, bent left arm and hammer above the glowing blank.
     poly([(-16,-41),(-24,-34),(-30,-42),(-26,-49),(-17,-50)],'#b48d5c')
     poly([(-29,-44),(-35,-50),(-32,-58),(-27,-58),(-23,-51)],'#6e4c2c')
@@ -613,13 +658,20 @@ def render(DATA):
     poly([(-47,-69),(-33,-67),(-30,-59),(-44,-58),(-50,-61)],'#7f8990')
     poly([(-47,-69),(-33,-67),(-30,-64),(-44,-63),(-50,-65)],'#b3b6ab')
     poly([(-33,-67),(-30,-59),(-35,-58),(-38,-66)],'#535f68')
+    endmotion()
     poly([(-10,-65),(-4,-71),(6,-70),(12,-61),(7,-50),(-3,-49),(-13,-56)],'#c49f68')
     poly([(-10,-65),(-4,-71),(6,-70),(2,-60),(-8,-54),(-13,-56)],'#d6b47b')
     poly([(-12,-65),(-8,-78),(5,-83),(14,-75),(11,-65),(2,-69),(-5,-66)],'#b18a2f')
     poly([(-8,-78),(5,-83),(14,-75),(2,-75),(-12,-65)],'#d3ad42')
     poly([(-12,-62),(-15,-58),(-10,-57),(-5,-51),(-3,-57)],'#b48c5b')
     path('M-10-62l3 1','none',stroke='#3b3426',stroke_width=1.5)
+    endmotion()
     add('</g>')
+    # A small pair of warm chips follows the actual contact, then fades away.
+    for xx,yy in [(487,798),(490,799)]:
+     add('<g class="motion transient smith-spark">')
+     rect(xx,yy,2.5,2,'#ffcd66')
+     add('</g>')
     # Small plain smithy supply barrel and ingot crate.
     add('<g transform="translate(613 733)">')
     poly([(-17,-23),(-20,-12),(-18,18),(-6,25),(13,22),(20,12),(18,-18)],'#76572f')

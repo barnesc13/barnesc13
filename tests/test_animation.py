@@ -47,20 +47,20 @@ class AnimationTests(unittest.TestCase):
 
     def test_all_motion_has_bounded_cycle_and_reduced_motion_fallback(self):
         motions=[n for n in self.root.iter() if 'motion' in n.get('class','').split()]
-        self.assertEqual(len(motions),9)
+        self.assertEqual(len(motions),14)
         self.assertIn('@media (prefers-reduced-motion: no-preference)',self.css)
         self.assertIn('@media (prefers-reduced-motion: reduce)',self.css)
         self.assertIn('.motion { animation: none !important; }',self.css)
         self.assertIn('.transient { opacity: 0; }',self.css)
         for cls,seconds in re.findall(r'\.([\w-]+) \{ animation: [\w-]+ ([\d.]+)s',self.css):
-            self.assertGreaterEqual(float(seconds),3.6)
+            self.assertGreaterEqual(float(seconds),2.4)
             self.assertEqual((Fraction('14.4')/Fraction(seconds)).denominator,1)
         for node in motions:
             self.assertRegex(self.css,r'\.'+node.get('class').split()[-1]+r' \{ animation:')
 
     def test_rotating_and_scaling_parts_use_local_fixed_pivots(self):
         pivots=self.root.findall('.//s:g[@data-motion-pivot]',NS)
-        self.assertEqual(len(pivots),7)
+        self.assertEqual(len(pivots),10)
         for outer in pivots:
             animated=list(outer)[0]
             geometry=list(animated)[0]

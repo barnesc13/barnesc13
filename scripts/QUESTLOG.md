@@ -14,7 +14,7 @@ GitHub-hosted Ubuntu runners and Python's standard library are sufficient. The b
 - **Active days**: dates with at least one contribution.
 - **Best streak**: the longest sequence of active dates within the displayed window.
 - **Current streak**: consecutive active dates ending today, or yesterday if the partial current day still has zero contributions. A second zero ends the streak.
-- **Window**: 182 consecutive GitHub calendar dates (26 weeks), ending on the UTC run date. The current day is partial. Each column contains seven consecutive days; it is not a Sunday-aligned GitHub calendar.
+- **Window**: 182 consecutive GitHub calendar dates (26 weeks), ending on the UTC run date. The current day is partial. Columns now match GitHub calendar weeks, with Sunday at the top and Saturday at the bottom. Most rolling 182-day windows span 27 columns because the first and last weeks are partial. Blank edge slots are outside the window; they are not zero-contribution dates.
 
 GitHub assigns each underlying contribution to a calendar date using its own contribution-date rules; the updater does not reinterpret commit timestamps.
 
