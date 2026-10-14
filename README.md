@@ -1,4 +1,4 @@
-<img align="left" src="https://raw.githubusercontent.com/barnesc13/barnesc13/main/assets/tokyo-desk.gif?v=compact" width="320" height="320" alt="An animated Tokyo desk with a city view, laptop, latte and watch" />
+<img align="left" src="https://raw.githubusercontent.com/barnesc13/barnesc13/main/assets/tokyo-desk.gif?v=compact" width="320" alt="An animated Tokyo desk with a city view, laptop, latte and watch" />
 
 - Grew up with a controller in my hands and a computer within reach.
 - At 11, led WoW raids against the Lich King and benched grown men with mortgages. My first management role.
