@@ -1,5 +1,14 @@
 ## Hi there 👋
 
+- Grew up with a controller in my hands and a computer within reach.
+- At 11, led WoW raids against the Lich King and benched grown men with mortgages. My first management role.
+- At 13, played professional Call of Duty before esports was a thing.
+- At 18, taught myself to code sneaker bots and restock monitors. First internet money. Proud sneaker Twitter alum.
+- At 19, dropped out for a full-time software engineering job at a Fortune 500.
+- At 23, took my work abroad. Solo traveled through 20+ countries, made a home in a Oaxacan beach town, learned Spanish.
+- At 26, quit to build something of my own. Plenty of failures, plenty learned.
+- At 28, potentially descending into AI psychosis but having fun while doing it
+
 <!--
 **barnesc13/barnesc13** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
