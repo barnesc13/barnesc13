@@ -1,0 +1,1 @@
+"""Approved vector character artwork."""

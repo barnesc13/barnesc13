@@ -38,3 +38,19 @@ The daily workflow never uses offline replay or fallback data. If GitHub blocks 
 ## Profile visibility
 
 The image displays in this repository's README for people with access. A GitHub profile README appears to public visitors only when GitHub's profile repository requirements are met, including a public repository matching the username. This workflow does not change repository visibility or access settings.
+
+
+## Animated crossover visitors
+
+The approved crossover scenery is applied by `crossover.apply()` to the newly
+rendered contribution SVG on every run. It never uses a frozen preview SVG or
+saved sample counts. All 11 visitors and the 46 added native CSS tracks are
+required; a missing module or changed scene anchor fails the refresh rather than
+publishing incomplete art. The ten visitor actions use a seamless 28.8-second
+held-pose loop. Nessie, the contribution tiles and the quest-log statistics stay
+still. Reduced-motion preferences retain the static resting poses.
+
+Run the existing test command to cover both the calendar and crossover rigs.
+`tests/test_crossover.py` also verifies exact data-panel preservation, changing
+counts, repeatable file-free rendering, one visible ball/action state, and tool
+and chest-contact geometry. There are no additional runtime dependencies.

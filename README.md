@@ -11,7 +11,7 @@
 - At 26, quit to build something of my own. Plenty of failures, plenty learned.
 - At 28, potentially descending into AI psychosis but having a lot of fun.
 
-![RuneScape contribution garden with a quest log of my GitHub activity](https://raw.githubusercontent.com/barnesc13/barnesc13/refs/heads/main/assets/questlog.svg)
+![RuneScape contribution garden with a quest log of my GitHub activity](https://raw.githubusercontent.com/barnesc13/barnesc13/refs/heads/main/assets/questlog.svg?v=crossover-animated-v4)
 
 <!--
 **barnesc13/barnesc13** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.

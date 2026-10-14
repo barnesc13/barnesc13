@@ -105,7 +105,7 @@ def motion_css():
     return '\n'.join(css)
 
 
-def render(DATA):
+def render_base(DATA):
     random.seed(42)
     S=[]
     def add(s): S.append(s)
@@ -869,3 +869,9 @@ def render(DATA):
     add('</svg>')
     return '\n'.join(S)
 
+
+
+def render(DATA):
+    """Render current contribution data, then apply approved crossover scenery."""
+    from crossover import apply
+    return apply(render_base(DATA))
