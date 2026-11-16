@@ -7,24 +7,20 @@
   "coverage": "Includes only counts GitHub exposes publicly, including private contribution aggregates if enabled by the user. No private repository details are accessed.",
   "streakDefinition": "Consecutive active GitHub calendar dates within the displayed 182-day window; a zero on the partial current day is still pending.",
   "requestedWindow": {
-    "start": "2026-05-18",
-    "end": "2026-11-15",
+    "start": "2026-05-19",
+    "end": "2026-11-16",
     "definition": "182 consecutive GitHub calendar dates; end date selected in UTC, current day partial.",
-    "total": 4046,
+    "total": 4629,
     "days": 182,
-    "activeDays": 175,
-    "bestStreak": 45,
-    "bestStreakEnd": "2026-07-24",
-    "currentStreakAllowTodayPending": 28,
-    "currentStreakEnd": "2026-11-14",
-    "currentStreakStrictThroughToday": 0,
-    "peakCount": 333
+    "activeDays": 178,
+    "bestStreak": 80,
+    "bestStreakEnd": "2026-11-16",
+    "currentStreakAllowTodayPending": 80,
+    "currentStreakEnd": "2026-11-16",
+    "currentStreakStrictThroughToday": 80,
+    "peakCount": 402
   },
   "last26Weeks": [
-    {
-      "date": "2026-05-18",
-      "count": 18
-    },
     {
       "date": "2026-05-19",
       "count": 12
@@ -403,7 +399,7 @@
     },
     {
       "date": "2026-08-21",
-      "count": 8
+      "count": 10
     },
     {
       "date": "2026-08-22",
@@ -447,7 +443,7 @@
     },
     {
       "date": "2026-09-01",
-      "count": 16
+      "count": 17
     },
     {
       "date": "2026-09-02",
@@ -455,11 +451,11 @@
     },
     {
       "date": "2026-09-03",
-      "count": 22
+      "count": 23
     },
     {
       "date": "2026-09-04",
-      "count": 6
+      "count": 7
     },
     {
       "date": "2026-09-05",
@@ -539,11 +535,11 @@
     },
     {
       "date": "2026-09-24",
-      "count": 1
+      "count": 2
     },
     {
       "date": "2026-09-25",
-      "count": 0
+      "count": 1
     },
     {
       "date": "2026-09-26",
@@ -571,7 +567,7 @@
     },
     {
       "date": "2026-10-02",
-      "count": 4
+      "count": 5
     },
     {
       "date": "2026-10-03",
@@ -603,11 +599,11 @@
     },
     {
       "date": "2026-10-10",
-      "count": 28
+      "count": 57
     },
     {
       "date": "2026-10-11",
-      "count": 16
+      "count": 20
     },
     {
       "date": "2026-10-12",
@@ -615,7 +611,7 @@
     },
     {
       "date": "2026-10-13",
-      "count": 66
+      "count": 73
     },
     {
       "date": "2026-10-14",
@@ -631,15 +627,15 @@
     },
     {
       "date": "2026-10-17",
-      "count": 0
+      "count": 22
     },
     {
       "date": "2026-10-18",
-      "count": 11
+      "count": 32
     },
     {
       "date": "2026-10-19",
-      "count": 15
+      "count": 27
     },
     {
       "date": "2026-10-20",
@@ -651,15 +647,15 @@
     },
     {
       "date": "2026-10-22",
-      "count": 59
+      "count": 94
     },
     {
       "date": "2026-10-23",
-      "count": 3
+      "count": 17
     },
     {
       "date": "2026-10-24",
-      "count": 13
+      "count": 14
     },
     {
       "date": "2026-10-25",
@@ -671,55 +667,55 @@
     },
     {
       "date": "2026-10-27",
-      "count": 91
+      "count": 100
     },
     {
       "date": "2026-10-28",
-      "count": 50
+      "count": 59
     },
     {
       "date": "2026-10-29",
-      "count": 119
+      "count": 123
     },
     {
       "date": "2026-10-30",
-      "count": 72
+      "count": 92
     },
     {
       "date": "2026-10-31",
-      "count": 173
+      "count": 230
     },
     {
       "date": "2026-11-01",
-      "count": 300
+      "count": 304
     },
     {
       "date": "2026-11-02",
-      "count": 333
+      "count": 342
     },
     {
       "date": "2026-11-03",
-      "count": 173
+      "count": 174
     },
     {
       "date": "2026-11-04",
-      "count": 77
+      "count": 98
     },
     {
       "date": "2026-11-05",
-      "count": 44
+      "count": 127
     },
     {
       "date": "2026-11-06",
-      "count": 15
+      "count": 20
     },
     {
       "date": "2026-11-07",
-      "count": 21
+      "count": 24
     },
     {
       "date": "2026-11-08",
-      "count": 15
+      "count": 33
     },
     {
       "date": "2026-11-09",
@@ -735,19 +731,23 @@
     },
     {
       "date": "2026-11-12",
-      "count": 8
+      "count": 23
     },
     {
       "date": "2026-11-13",
-      "count": 288
+      "count": 402
     },
     {
       "date": "2026-11-14",
-      "count": 137
+      "count": 171
     },
     {
       "date": "2026-11-15",
-      "count": 0
+      "count": 40
+    },
+    {
+      "date": "2026-11-16",
+      "count": 2
     }
   ]
 }
