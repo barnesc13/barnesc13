@@ -7,24 +7,20 @@
   "coverage": "Includes only counts GitHub exposes publicly, including private contribution aggregates if enabled by the user. No private repository details are accessed.",
   "streakDefinition": "Consecutive active GitHub calendar dates within the displayed 182-day window; a zero on the partial current day is still pending.",
   "requestedWindow": {
-    "start": "2026-05-19",
-    "end": "2026-11-16",
+    "start": "2026-05-20",
+    "end": "2026-11-17",
     "definition": "182 consecutive GitHub calendar dates; end date selected in UTC, current day partial.",
-    "total": 4629,
+    "total": 4618,
     "days": 182,
-    "activeDays": 178,
+    "activeDays": 177,
     "bestStreak": 80,
     "bestStreakEnd": "2026-11-16",
     "currentStreakAllowTodayPending": 80,
     "currentStreakEnd": "2026-11-16",
-    "currentStreakStrictThroughToday": 80,
+    "currentStreakStrictThroughToday": 0,
     "peakCount": 402
   },
   "last26Weeks": [
-    {
-      "date": "2026-05-19",
-      "count": 12
-    },
     {
       "date": "2026-05-20",
       "count": 3
@@ -747,7 +743,11 @@
     },
     {
       "date": "2026-11-16",
-      "count": 2
+      "count": 3
+    },
+    {
+      "date": "2026-11-17",
+      "count": 0
     }
   ]
 }
